@@ -1,0 +1,125 @@
+From e4489612952606501869d63b8119bed61d8ee4ed Mon Sep 17 00:00:00 2001
+From: Sam Spilsbury <sam.spilsbury@canonical.com>
+Date: Wed, 23 Mar 2011 22:36:30 +0800
+Subject: [PATCH] Don't treat synthetic UnmapNotify the same as the real UnmapNotify
+
+ICCCM section 4.1.4 says that applications need to send us a synthetic
+UnmapNotify to tell us that the window has been withdrawn in all cases
+to cover the case where a window is already unmapped and then withdrawn.
+
+In this case we should handle the UnmapNotify as a request to withdraw
+the window, but we should only handle the *real* UnmapNotify request
+as a request to actually process the window being unmapped and withdraw
+it there, rather than processing both twice and withdrawing the window
+twice
+---
+ src/event.cpp       |   38 ++++++++++++++++++++++++--------------
+ src/privatewindow.h |    2 ++
+ src/window.cpp      |   11 +++++++++++
+ 3 files changed, 37 insertions(+), 14 deletions(-)
+
+diff --git a/src/event.cpp b/src/event.cpp
+index 5c0769d..b27e8b5 100644
+--- a/src/event.cpp
++++ b/src/event.cpp
+@@ -1122,7 +1122,7 @@ CompScreen::handleEvent (XEvent *event)
+ 	 * and then bypassing MapRequest because it *is* override-redirect
+ 	 * at XMapWindow time, so we need to catch this case and make
+ 	 * sure that windows are tracked here */
+-	
++       
+ 	foreach (CoreWindow *cw, priv->createdWindows)
+ 	{
+ 	    if (cw->priv->id == event->xmap.window)
+@@ -1184,30 +1184,40 @@ CompScreen::handleEvent (XEvent *event)
+ 	    }
+ 	    else /* X -> Withdrawn */
+ 	    {
+-		/* Iconic -> Withdrawn */
++		/* Iconic -> Withdrawn:
++		 *
++		 * The window is already unmapped so we need to check the
++		 * synthetic UnmapNotify that comes and withdraw the window here */
+ 		if (w->state () & CompWindowStateHiddenMask)
+ 		{
+ 		    w->priv->minimized = false;
+-
+ 		    w->changeState (w->state () & ~CompWindowStateHiddenMask);
+ 
+ 		    priv->updateClientList ();
++		    w->priv->withdraw ();
+ 		}
+-		else /* Closing */
++		/* Closing:
++		 *
++		 * ICCCM Section 4.1.4 says that clients need to send
++		 * a synthetic UnmapNotify for every real unmap
++		 * in order to reflect the change in state, but
++		 * since we already withdraw the window on the real
++		 * UnmapNotify, no need to do it again on the synthetic
++		 * one. */
++		else if (!event->xunmap.send_event)
++		{
+ 		    w->windowNotify (CompWindowNotifyClose);
+-
+-		if (!w->overrideRedirect ())
+-		    priv->setWmState (WithdrawnState, w->id ());
+-
+-		w->priv->placed     = false;
+-		w->priv->unmanaging = w->priv->managed;
+-		w->priv->managed    = false;
++		    w->priv->withdraw ();
++		}
+ 	    }
+ 
+-	    w->unmap ();
++	    if (!event->xunmap.send_event)
++	    {
++		w->unmap ();
+ 
+-	    if (!w->shaded () && !w->priv->pendingMaps)
+-		w->moveInputFocusToOtherWindow ();
++		if (!w->shaded () && !w->priv->pendingMaps)
++		    w->moveInputFocusToOtherWindow ();
++	    }
+ 	}
+ 	break;
+     case ReparentNotify:
+diff --git a/src/privatewindow.h b/src/privatewindow.h
+index 4bed1bc..2b2d6a4 100644
+--- a/src/privatewindow.h
++++ b/src/privatewindow.h
+@@ -137,6 +137,8 @@ class PrivateWindow {
+ 
+ 	void show ();
+ 
++	void withdraw ();
++
+ 	bool handlePingTimeout (unsigned int lastPing);
+ 
+ 	void handlePing (int lastPing);
+diff --git a/src/window.cpp b/src/window.cpp
+index 53fe4d8..7ea63ba 100644
+--- a/src/window.cpp
++++ b/src/window.cpp
+@@ -1365,6 +1365,17 @@ CompWindow::unmap ()
+     windowNotify (CompWindowNotifyUnmap);
+ }
+ 
++void
++PrivateWindow::withdraw ()
++{
++    if (!attrib.override_redirect)
++	screen->priv->setWmState (WithdrawnState, id);
++
++    placed     = false;
++    unmanaging = managed;
++    managed    = false;
++}
++
+ bool
+ PrivateWindow::restack (Window aboveId)
+ {
+-- 
+1.7.4.1
+

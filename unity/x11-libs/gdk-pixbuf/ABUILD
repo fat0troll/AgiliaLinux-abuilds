@@ -1,0 +1,38 @@
+pkgname=gdk-pixbuf-unity
+name=gdk-pixbuf
+pkgver=2.23.1
+pkgbuild=1
+arch=('auto')
+
+shortdesc="GDK Pixbuf library"
+longdesc=("An image loading library for gtk2"
+)
+
+source=("http://download.gnome.org/sources/gdk-pixbuf/2.23/gdk-pixbuf-${pkgver}.tar.bz2")
+
+
+tags="libs x11-libs"
+provides="gdk-pixbuf"
+
+BUILD_SYSTEM="autotools"
+
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--without-libjasper \
+--with-included-loaders=png"
+
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
+after_build() {
+	# For compatibility
+	mkdir $pkgdir/usr/include/gtk-2.0
+	ln -s /usr/include/gdk-pixbuf-2.0/* $pkgdir/usr/include/gtk-2.0
+}

@@ -1,0 +1,89 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=speakup
+_kernver=`uname -r`
+pkgver=3.1.6
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Kernel-based screenreader for the Linux console"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("The speakup project is basically a bunch of blind people who like messing around with Linux and writing cool and, hopefully useful, software."
+)
+
+source=("ftp://linux-speakup.org/pub/speakup/$pkgname-$pkgver.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="accessibility app-accessibility"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+cd "$srcdir/$pkgname-$pkgver"
+
+# The following patch is necessary in order to build against the 2.6.36
+# kernel.  It is in upstream's git repo.
+patch -N -p1 < "$filedir/k2.6.36.patch"
+
+# Fix a possible double-free.  It is not legal to call input_free_device
+# after input_unregister_device.  The former function should only be
+# used for cleanup in case of errors.
+
+patch -N -p1 < "$filedir/no_free.patch"
+
+cd src
+
+make KERNELDIR="/lib/modules/${_kernver}/build"
+
+install -d "$pkgdir/lib/modules/${_kernver}/kernel/drivers/$pkgname"
+install -d "$pkgdir/usr/share/doc/$pkgname"
+install -m 0644 speakup*.ko \
+	"$pkgdir/lib/modules/${_kernver}/kernel/drivers/$pkgname"
+install -m 0644 ../doc/* "$pkgdir/usr/share/doc/$pkgname"
+sed -i -e "s/KERNEL_VERSION='.*'/KERNEL_VERSION='${_kernver}'/" \
+	"$startdir/speakup.install"
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+cat ${filedir}/doinst.sh | sed -e "s/KERNEL/$_kernver/g" > ${pkgdir}/install/doinst.sh
+}

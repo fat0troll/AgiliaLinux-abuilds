@@ -1,0 +1,11 @@
+--- gdm-2.91.92.orig/daemon/gdm-server.c	2011-03-08 09:47:03.000000000 +0000
++++ gdm-2.91.92/daemon/gdm-server.c	2011-03-08 09:48:49.000000000 +0000
+@@ -131,7 +131,7 @@
+         g_return_val_if_fail (GDM_IS_SERVER (server), NULL);
+ 
+         error = NULL;
+-        command = g_strdup_printf (LIBEXECDIR "/ck-get-x11-display-device --display %s",
++        command = g_strdup_printf ("/usr/lib/Consolekit/ck-get-x11-display-device --display %s",
+                                    server->priv->display_name);
+ 
+         g_debug ("GdmServer: Running helper %s", command);

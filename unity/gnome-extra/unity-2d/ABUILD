@@ -1,0 +1,79 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=unity-2d
+pkgver=3.2.2
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Unity - 2D mode"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("Unity - 2D mode"
+)
+
+#source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_$pkgver.orig.tar.gz")
+source=("bzr:lp:$pkgname")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="xapps gnome-extra"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+go_src_dir
+# fix indicators and imports location
+if [ "$ARCH" = "x86_64" ] ; then
+	sed -i 's|INDICATOR_DIR "/usr/lib/indicators/4/"|INDICATOR_DIR "/usr/lib64/indicators/5/"|' panel/applets/indicator/indicator.c
+	sed -i 's|lib/qt4|lib64/qt|' CMakeLists.txt
+else
+	sed -i 's|INDICATOR_DIR "/usr/lib/indicators/4/"|INDICATOR_DIR "/usr/lib/indicators/5/"|' panel/applets/indicator/indicator.c
+	sed -i 's|lib/qt4|lib/qt|' CMakeLists.txt
+fi
+}
+
+BUILD_SYSTEM="cmake"
+BUILD_KEYS="-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=RELEASE \
+-DLIB_DIR=lib${LIBDIRSUFFIX} \
+-DLIB_SUFFIX=${LIBDIRSUFFIX} \
+../"
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+# Too dirty hacks…
+mkdir -p $pkgdir/usr/lib$LIBDIRSUFFIX/qt
+mv $pkgdir/usr/lib/qt4/* $pkgdir/usr/lib$LIBDIRSUFFIX/qt
+rmdir $pkgdir/usr/lib/qt4/
+}

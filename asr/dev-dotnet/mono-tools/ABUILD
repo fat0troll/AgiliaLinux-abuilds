@@ -1,0 +1,81 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=mono-tools
+pkgver=2.8
+pkgbuild=1
+arch=('auto')
+
+shortdesc="testing and devel utils for Mono"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("collection of testing and development tools for use with mono (including monodoc browser)"
+)
+
+source=("http://ftp.novell.com/pub/mono/sources/$pkgname/$pkgname-$pkgver.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="develop dev-dotnet"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+# get rid of that .wapi errors; thanks to brice
+export MONO_SHARED_DIR="${startdir}/src/weird"
+mkdir -p "${MONO_SHARED_DIR}"
+
+cd ${startdir}/src/${pkgname}-${pkgver}
+aclocal || exit 1
+autoconf || exit 1
+automake || exit 1
+./configure --prefix=/usr || exit 1
+make || exit 1
+make GACUTIL="/usr/bin/gacutil /root ${startdir}/pkg/usr/lib${LIBDIRSUFFIX}" \
+	DESTDIR=${pkgdir} install || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+# Mono building is so sexy...
+if [ "$ARCH" = "x86_64" -a -d $pkgdir/usr/lib/pkgconfig ]; then
+	mkdir -p $pkgdir/usr/lib64 ;
+	mv $pkgdir/usr/lib/pkgconfig $pkgdir/usr/lib64 ;
+fi
+}

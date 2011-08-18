@@ -1,0 +1,77 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=compiz-unity
+pkgver=0.9.4
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Composite manager for Aiglx and Xgl"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("Composite manager for Aiglx and Xgl"
+)
+
+source=("http://archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz_0.9.4git20110322.orig.tar.gz")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="xapps x11-misc"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides="compiz"
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+#before_build()
+#{
+#echo ""
+#}
+
+build()
+{
+	go_src_dir
+	burn_patches
+	mkdir build
+	cd build
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_BUILD_TYPE=RELEASE \
+	-DLIB_DIR=lib${LIBDIRSUFFIX} \
+	-DLIB_SUFFIX=${LIBDIRSUFFIX} \
+        -DCOMPIZ_DESTDIR=$pkgdir || exit 1
+	make || exit 1
+	make findcompiz_install || exit 1
+	make DESTDIR=$pkgdir install || exit 1
+}
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+# dirty hack
+( cd $pkgdir/$pkgdir/ && tar cf - . ) | ( cd $pkgdir && tar xpvf - )
+}

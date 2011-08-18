@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=About Agilialinux
+Name[ru]=Об Agilialinux
+Comment=Learn more about AgiliaLinux
+Comment[ru]=Узнайте больше об AgiliaLinux
+Exec=agilialinux-about
+Icon=help
+Type=Application
+Categories=Core;Documentation;System;
+Terminal=false

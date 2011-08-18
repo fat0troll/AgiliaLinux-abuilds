@@ -1,0 +1,79 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=gtk+2-sharp
+pkgver=2.12.10
+pkgbuild=1
+arch=('auto')
+
+shortdesc="C# bindings for GTK+"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("gtk2 bindings for C#"
+)
+
+source=("http://ftp.gnome.org/pub/GNOME/sources/gtk-sharp/2.12/gtk-sharp-${pkgver}.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="develop dev-dotnet"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="mono>=2.8"
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+# get rid of that .wapi errors; thanks to brice
+export MONO_SHARED_DIR="${srcdir}/weird"
+mkdir -p "${MONO_SHARED_DIR}"
+
+cd "${srcdir}/gtk-sharp-${pkgver}"
+./configure --prefix=/usr \
+	--libdir=/usr/lib${LIBDIRSUFFIX} \
+	--sysconfdir=/etc \
+	--disable-static || exit 1
+make || exit 1
+make GACUTIL="/usr/bin/gacutil /root ${pkgdir}/usr/lib${LIBDIRSUFFIX}" \
+         DESTDIR="${pkgdir}" install || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+# Mono building is so sexy...
+cd $pkgdir/usr/lib${LIBDIRSUFFIX}
+mv mono/ $pkgdir/usr/lib
+}

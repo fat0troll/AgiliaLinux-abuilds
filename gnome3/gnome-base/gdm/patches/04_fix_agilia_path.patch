@@ -1,0 +1,11 @@
+--- gdm-2.91.92.orig/gui/simple-chooser/gdm-chooser-session.c	2011-03-08 09:47:02.000000000 +0000
++++ gdm-2.91.92/gui/simple-chooser/gdm-chooser-session.c	2011-03-08 09:53:03.000000000 +0000
+@@ -131,7 +131,7 @@
+         ret = FALSE;
+ 
+         error = NULL;
+-        g_spawn_command_line_async (LIBEXECDIR "/gnome-settings-daemon", &error);
++        g_spawn_command_line_async ("/usr/bin/gnome-settings-daemon", &error);
+         if (error != NULL) {
+                 g_warning ("Error starting settings daemon: %s", error->message);
+                 g_error_free (error);

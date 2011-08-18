@@ -1,0 +1,78 @@
+From 4e3e568ce845fddce15d05d4f5263a7133ef6fff Mon Sep 17 00:00:00 2001
+From: Benjamin Drung <bdrung@ubuntu.com>
+Date: Wed, 10 Mar 2010 08:49:52 +0100
+Subject: [PATCH] g_format_size_for_display(): Use correct base-10 units
+
+Almost all byte sizes these days are commonly given in base-10 units (with RAM
+size being the one notable exception). Fix g_format_size_for_display() to
+actually use base-10 and not base-2, and fix the wrong "KB" unit (which does
+not exist) to be "kB".
+
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=554172
+Bug-Ubuntu: https://launchpad.net/bug/369525
+
+Signed-off-by: Martin Pitt <martin.pitt@ubuntu.com>
+---
+ glib/gfileutils.c      |   10 +++++-----
+ glib/tests/fileutils.c |    8 +++++---
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/glib/gfileutils.c b/glib/gfileutils.c
+index 76335fa..74e422c 100644
+--- a/glib/gfileutils.c
++++ b/glib/gfileutils.c
+@@ -1742,7 +1742,7 @@ g_build_filename (const gchar *first_element,
+   return str;
+ }
+ 
+-#define KILOBYTE_FACTOR (G_GOFFSET_CONSTANT (1024))
++#define KILOBYTE_FACTOR (G_GOFFSET_CONSTANT (1000))
+ #define MEGABYTE_FACTOR (KILOBYTE_FACTOR * KILOBYTE_FACTOR)
+ #define GIGABYTE_FACTOR (MEGABYTE_FACTOR * KILOBYTE_FACTOR)
+ #define TERABYTE_FACTOR (GIGABYTE_FACTOR * KILOBYTE_FACTOR)
+@@ -1754,11 +1754,11 @@ g_build_filename (const gchar *first_element,
+  * @size: a size in bytes.
+  * 
+  * Formats a size (for example the size of a file) into a human readable string.
+- * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed 
+- * rounded to the nearest  tenth. E.g. the file size 3292528 bytes will be
++ * Sizes are rounded to the nearest size prefix (kB, MB, GB) and are displayed
++ * rounded to the nearest  tenth. E.g. the file size 3139528 bytes will be
+  * converted into the string "3.1 MB".
+  *
+- * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
++ * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
+  *
+  * This string should be freed with g_free() when not needed any longer.
+  *
+@@ -1779,7 +1779,7 @@ g_format_size_for_display (goffset size)
+       if (size < (goffset) MEGABYTE_FACTOR)
+ 	{
+ 	  displayed_size = (gdouble) size / (gdouble) KILOBYTE_FACTOR;
+-	  return g_strdup_printf (_("%.1f KB"), displayed_size);
++	  return g_strdup_printf (_("%.1f kB"), displayed_size);
+ 	}
+       else if (size < (goffset) GIGABYTE_FACTOR)
+ 	{
+diff --git a/glib/tests/fileutils.c b/glib/tests/fileutils.c
+index 225c6ce..63dd1ab 100644
+--- a/glib/tests/fileutils.c
++++ b/glib/tests/fileutils.c
+@@ -486,9 +486,11 @@ test_format_size_for_display (void)
+   check_string (g_format_size_for_display (0), "0 bytes");
+   check_string (g_format_size_for_display (1), "1 byte");
+   check_string (g_format_size_for_display (2), "2 bytes");
+-  check_string (g_format_size_for_display (1024), "1.0 KB");
+-  check_string (g_format_size_for_display (1024 * 1024), "1.0 MB");
+-  check_string (g_format_size_for_display (1024 * 1024 * 1024), "1.0 GB");
++  check_string (g_format_size_for_display (1000), "1.0 kB");
++  check_string (g_format_size_for_display (1000 * 1000), "1.0 MB");
++  check_string (g_format_size_for_display (1000 * 1000 * 1000), "1.0 GB");
++  /* round to nearest tenth, of 1.073 GB */
++  check_string (g_format_size_for_display (1024 * 1024 * 1024), "1.1 GB");
+ }
+ 
+ int
+-- 
+1.7.0
+

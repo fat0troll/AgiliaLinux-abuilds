@@ -1,0 +1,11 @@
+Index: gdm-2.25.2/data/gconf.path
+===================================================================
+--- gdm-2.25.2.orig/data/gconf.path
++++ gdm-2.25.2/data/gconf.path
+@@ -1,5 +1,5 @@
+ # treat system-wide settings as mandatory
+-xml:readonly:/etc/gconf/gconf.xml.system
++xml:readonly:/etc/gconf/gconf.xml.defaults
+ 
+ # override some settings
+ # we treat settings in this location as

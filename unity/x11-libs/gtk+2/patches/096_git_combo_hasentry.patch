@@ -1,0 +1,45 @@
+From ddd632dfc68d5024faa67dbb5d85af00d2ea2964 Mon Sep 17 00:00:00 2001
+From: Mike Gorse <mgorse@novell.com>
+Date: Mon, 14 Mar 2011 20:34:26 +0000
+Subject: Support GtkComboBoxEntry in GAIL again
+
+GAIL now supports the has_entry property for combo boxes, but the old
+GtkComboBoxEntry class does not use this property, so GAIL has not been
+supporting it correctly in 2.24.
+
+http://bugzilla.gnome.org/show_bug.cgi?id=637304
+---
+diff --git a/modules/other/gail/gailcombobox.c b/modules/other/gail/gailcombobox.c
+index fd7df31..2c40639 100644
+--- a/modules/other/gail/gailcombobox.c
++++ b/modules/other/gail/gailcombobox.c
+@@ -17,6 +17,8 @@
+  * Boston, MA 02111-1307, USA.
+  */
+ 
++#undef GTK_DISABLE_DEPRECATED
++
+ #include "config.h"
+ 
+ #include <gtk/gtk.h>
+@@ -214,7 +216,8 @@ gail_combo_box_get_n_children (AtkObject* obj)
+     return 0;
+ 
+   n_children++;
+-  if (gtk_combo_box_get_has_entry (GTK_COMBO_BOX (widget)))
++  if (gtk_combo_box_get_has_entry (GTK_COMBO_BOX (widget)) ||
++      GTK_IS_COMBO_BOX_ENTRY (widget))
+     n_children ++;
+ 
+   return n_children;
+@@ -248,7 +251,8 @@ gail_combo_box_ref_child (AtkObject *obj,
+           box->popup_set = TRUE;
+         }
+     }
+-  else if (i == 1 && gtk_combo_box_get_has_entry (GTK_COMBO_BOX (widget)))
++  else if (i == 1 && (gtk_combo_box_get_has_entry (GTK_COMBO_BOX (widget)) ||
++                      GTK_IS_COMBO_BOX_ENTRY (widget)))
+     {
+       child = gtk_widget_get_accessible (gtk_bin_get_child (GTK_BIN (widget)));
+     }
+

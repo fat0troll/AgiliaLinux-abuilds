@@ -1,0 +1,86 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=google-earth
+pkgver=6.0.1.2032
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Google Earth"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("A 3D interface to the planet Earth"
+)
+
+source=("http://dl.google.com/earth/client/current/GoogleEarthLinux.bin")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+if [ "$ARCH" = "x86_64" ] ; then 
+	tags="x86 network net-misc"
+else
+	tags="network net-misc"
+fi
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="ld-lsb"
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+cd $srcache
+#Extract archive
+sh ./GoogleEarthLinux.bin --noexec --target ${srcdir}/${pkgname} || exit 1
+# Install binaries and data files
+mkdir -p ${pkgdir}/opt/${pkgname}
+tar -xpf ${srcdir}/${pkgname}/googleearth-linux-x86.tar -C ${pkgdir}/opt/${pkgname}/ || exit 1
+tar -xpf ${srcdir}/${pkgname}/googleearth-data.tar -C ${pkgdir}/opt/${pkgname}/ || exit 1
+# Install executable
+install -D -m755 ${filedir}/googleearth ${pkgdir}/usr/bin/googleearth || exit 1
+# Install .desktop file
+install -D -m644 ${filedir}/googleearth.desktop ${pkgdir}/usr/share/applications/googleearth.desktop || exit 1
+# Install shared MIME info package
+install -D -m644 ${filedir}/googleearth-mimetypes.xml ${pkgdir}/usr/share/mime/packages/googleearth-mimetypes.xml || exit 1
+# Install icon
+install -D -m644 ${srcdir}/${pkgname}/googleearth-icon.png ${pkgdir}/usr/share/pixmaps/googleearth-icon.png || exit 1
+# Change ownership to root
+chown -R root:root ${pkgdir}/* || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+echo ""
+}

@@ -1,0 +1,1 @@
+chroot . depmod -a KERNEL

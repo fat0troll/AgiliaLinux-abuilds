@@ -1,0 +1,80 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=gnome-power-manager
+pkgver=3.0.0
+tree=`echo $pkgver | cut -d . -f 1-2`
+pkgbuild=1
+arch=('auto')
+
+shortdesc="power management tool for the GNOME desktop"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("GNOME Power Manager is a session daemon for the GNOME desktop that takes care of system or desktop events related to power, and triggers actions accordingly. Its philosophy is to completely hide these complex tasks and only show some settings important to the user.
+
+The GNOME power manager displays and manages battery status, power plug events, display brightness, CPU, graphics card and hard disk drive power saving, and can trigger suspend-to-RAM, hibernate or shutdown events, all integrated to other components of the GNOME desktop. "
+)
+
+source=("http://ftp.gnome.org/pub/GNOME/sources/gnome-power-manager/$tree/${pkgname}-${pkgver}.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="gnome gnome-extra"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+BUILD_SYSTEM="autotools"
+
+#BUILD_WORD="./configure"
+
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--libexecdir=/usr/lib$LIBDIRSUFFIX/gnome-power-manager \
+--disable-static \
+--mandir=/usr/man \
+--disable-scrollkeeper \
+--with-dbus-services=/usr/share/dbus-1/services \
+--disable-schemas-compile"
+
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+echo ""
+}

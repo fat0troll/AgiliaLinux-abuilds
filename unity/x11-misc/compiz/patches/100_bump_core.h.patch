@@ -1,0 +1,13 @@
+Index: compiz-0.9.4git20110322/include/core/core.h
+===================================================================
+--- compiz-0.9.4git20110322.orig/include/core/core.h	2011-03-22 19:34:36.779101039 +0100
++++ compiz-0.9.4git20110322/include/core/core.h	2011-03-22 19:34:50.723170182 +0100
+@@ -27,7 +27,7 @@
+ #define _COMPIZ_CORE_H
+ 
+ 
+-#define CORE_ABIVERSION 20110224
++#define CORE_ABIVERSION 20110322
+ 
+ #include <stdio.h>
+ #include <assert.h>
