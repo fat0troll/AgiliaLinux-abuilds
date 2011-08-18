@@ -5,7 +5,7 @@ pkgname=Wuala
 name=wuala
 pkgver=2_build20110818
 pkgbuild=1
-arch=('auto')
+arch=('noarch')
 
 shortdesc="A new way of storing, sharing and publishing files on the Internet.  It's free, simple and secure."
 
