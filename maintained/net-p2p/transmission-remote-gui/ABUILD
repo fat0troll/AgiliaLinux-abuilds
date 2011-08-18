@@ -1,0 +1,70 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=transmission-remote-gui
+pkgver=3.2
+pkgbuild=1
+arch=('auto')
+
+shortdesc="A feature rich cross platform front-end to remotely control Transmission daemon."
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("A feature rich cross platform front-end to remotely control Transmission daemon."
+)
+
+source=("svn:http://transmisson-remote-gui.googlecode.com/svn/trunk/")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="network net-p2p"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+#before_build()
+#{
+#echo ""
+#}
+
+build()
+{
+go_src_dir
+burn_patches
+lazbuild transgui.lpi || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+go_src_dir
+install -D -m755 units/transgui $pkgdir/usr/bin/transgui || exit 1
+install -D -m644 transgui.png $pkgdir/usr/share/pixmaps/transgui.png || exit 1
+}

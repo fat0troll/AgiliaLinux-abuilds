@@ -1,0 +1,117 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=gnome-python
+pkgver=2.28.1
+pkgbuild=7
+arch=('auto')
+
+shortdesc="Gnome-Python (GNOME Python bindings)"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("Gnome-Python is a set of interfaces to gnome-libs.It also contains gnome-python : a copy of PyGTK, so you don't have to worry about gnome-python gnome-python: getting out of sync with your copy of PyGTK. The bindings cover gnome-python: almost all of the APIs in gnome-libs."
+)
+
+source=("ftp://ftp.gnome.org/pub/gnome/sources/gnome-python/2.28/gnome-python-${pkgver}.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="develop dev-python"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="python-bonobo python-gconf python-libgnome python-libgnomecanvas python-gnomevfs"
+removedep=""
+
+
+#for multi pkg abuild
+pkglist="bonobo gconf libgnome canvas vfs"
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+bonobo()
+{
+	pkgname=python-bonobo
+	shortdesc="Python bindings for interacting with Bonobo"
+	pkg_files=bonobo
+}
+gconf()
+{
+	pkgname=python-gconf
+	shortdesc="Python bindings for interacting with GConf"
+	pkg_files=gconf
+}
+libgnome()
+{
+	pkgname=python-libgnome
+	shortdesc="Python bindings for libgnome"
+	pkg_files=libgnome
+}
+canvas()
+{
+	pkgname=python-libgnomecanvas
+	shortdesc="Python bindings for the GNOME Canvas"
+	pkg_files=libgnomecanvas
+}
+vfs()
+{
+	pkgname=python-gnomevfs
+	shortdesc="Python bindings for interacting with gnome-vfs"
+	pkg_files=gnomevfs
+}
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+go_src_dir
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix=
+make || exit 1
+}
+#ran after function build() 
+#после сборки
+after_build()
+{
+	# well, make dirs...
+	mkdir -p $startdir/bonobo
+	mkdir -p $startdir/gconf
+	mkdir -p $startdir/libgnome
+	mkdir -p $startdir/libgnomecanvas
+	mkdir -p $startdir/gnomevfs
+	# install this!
+	make install-pkgconfigDATA DESTDIR=$pkgdir
+	make -C bonobo install DESTDIR="$startdir/bonobo"
+	make -C gconf install DESTDIR="$startdir/gconf"
+	make -C gnome install DESTDIR="$startdir/libgnome"
+	make -C gnomecanvas install DESTDIR="$startdir/libgnomecanvas"
+	make -C gnomevfs install DESTDIR="$startdir/gnomevfs"
+}

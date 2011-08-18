@@ -1,0 +1,68 @@
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=autoconf2.13
+pkgver=2.13
+pkgbuild=1
+arch=('auto')
+
+shortdesc="A GNU tool for automatically configuring source code (Legacy 2.1x version)"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("GNU autoconf is an extensible package of m4 macros that produce shell scripts to automatically configure software source code packages. These scripts can adapt the packages to many kinds of UNIX-like systems without manual user intervention. Autoconf creates a configuration script for a package from a template file that lists the operating system features that the package can use, in the form of m4 macro calls. You must install the "m4" package to be able to use autoconf. 
+
+This is legacy autoconf 2.13"
+)
+
+source=("http://ftpmirror.gnu.org/autoconf/autoconf-${pkgver}.tar.gz")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+
+tags="dev-libs develop"     			#short and long tags / длинный и короткий тег
+build_deps="" 			#
+
+provides=""
+conflicts=""
+
+adddep="perl"
+removedep=""
+
+
+#numjobs=1 #Set number of jobs while compliling, otherwise it'll be autodetected
+
+docs=				#additional files should be copied into /usr/docs/${pkgname} dir from sources
+gendeps_blacklist=
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+BUILD_SYSTEM="autotools"
+
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--infodir=/usr/share/info \
+--program-suffix=-2.13"
+
+INSTALL_KEYS="DESTDIR=$pkgdir prefix="${pkgdir}/usr" infodir="${pkgdir}/usr/share/info""
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+ echo ""
+}

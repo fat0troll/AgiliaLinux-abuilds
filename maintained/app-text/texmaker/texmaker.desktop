@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Texmaker
+Name[ru]=Texmaker
+Comment=Free cross-platform (QT4) LaTeX editor
+Comment[ru]=Свободный кроссплатформенный редактор LaTex, написанный на Qt
+Icon=texmaker.png
+Exec=texmaker
+Categories=Office;
+

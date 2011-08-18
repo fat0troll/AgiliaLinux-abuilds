@@ -1,0 +1,66 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=gdm2setup
+pkgver=0.5.3
+pkgbuild=3
+arch=('auto')
+
+shortdesc="tool for editing settings of newest gdm"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("A login interface management utility for the new GDM. Allows for wallpaper setting, autologin option, prompted or userlist login, etc."
+)
+
+source=("http://pypi.python.org/packages/source/g/gdm2setup/gdm2setup-${pkgver}-karmic.tar.gz")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="gnome gnome-extra"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="pil"
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+cd $srcdir/$pkgname-$pkgver-karmic/
+python setup.py install --root=$pkgdir || return 1
+}
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+echo ""
+}

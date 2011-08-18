@@ -1,0 +1,75 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=perl-XML-Twig
+pkgver=3.34
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Perl module for processing huge XML documents in tree mode"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("This module provides a way to process XML documents. It is built on top of XML::Parser.
+
+The module offers a tree interface to the document, while allowing to output the parts of it that have been completely processed.
+
+It allows minimal resource (CPU and memory) usage by building the tree only for the parts of the documents that need actual processing, through the use of the twig_roots and twig_print_outside_roots options. The finish and finish_print methods also help to increase performance.
+
+XML::Twig tries to make simple things easy so it tries its best to takes care of a lot of the (usually) annoying (but sometimes necessary) features that come with XML and XML::Parser."
+)
+
+source=("http://www.cpan.org/authors/id/M/MI/MIROD/XML-Twig-${pkgver}.tar.gz")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="libs dev-libs"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+	cd  "${srcdir}/XML-Twig-${pkgver}"
+	perl Makefile.PL -y INSTALLDIRS=vendor
+	make
+	make DESTDIR="${pkgdir}" install
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+echo ""
+}

@@ -1,0 +1,88 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=plymouth
+pkgver=0.8.4
+pkgbuild=1
+arch=('auto')
+
+shortdesc="Graphical boot animation (splash) and logger"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("Graphical boot animation (splash) and logger"
+)
+
+source=("git:git://git.freedesktop.org/git/plymouth")
+
+patch_opts=("")
+
+config_files="etc/plymouth/plymouthd.conf"
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="base sys-boot"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="dracut"
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+#before_build()
+#{
+#echo ""
+#}
+
+BUILD_SYSTEM="autotools"
+
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./autogen.sh"
+
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--enable-tracing \
+--with-system-root-install \
+--disable-tests \
+--enable-gdm-transition \
+--without-rhgb-compat-link \
+--with-gdm-autostart-file=no \
+--with-logo=/usr/share/plymouth/agilialinux.png \
+--with-background-color=0x000000"
+
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+install -D -m755 $filedir/plymouth.handler $pkgdir/etc/init.d/plymouth || exit 1
+install -D -m644 $filedir/agilialinux.png $pkgdir/usr/share/plymouth/agilialinux.png || exit 1
+install -D -m644 $filedir/plymouthd.conf $pkgdir/etc/plymouth/ || exit 1
+install -D -m644 $filedir/plymouth.conf $pkgdir/etc/conf.d/plymouth
+}

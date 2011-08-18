@@ -1,0 +1,10 @@
+--- src/impex/CMakeLists.txt.orig	2011-01-26 13:11:25.000000000 +0000
++++ src/impex/CMakeLists.txt	2011-01-26 13:12:05.000000000 +0000
+@@ -62,5 +62,5 @@
+ INSTALL(TARGETS vigraimpex
+         EXPORT vigra-targets
+         RUNTIME DESTINATION bin 
+-        LIBRARY DESTINATION lib 
+-        ARCHIVE DESTINATION lib)
++	LIBRARY DESTINATION lib${LIB_SUFFIX} 
++	ARCHIVE DESTINATION lib${LIB_SUFFIX})

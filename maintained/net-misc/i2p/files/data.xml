@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<name>
+		i2p
+	</name>
+	<version>
+		0.8
+	</version>
+	<arch>
+		x86_64
+	</arch>
+	<build>
+		2
+	</build>
+	<short_description>
+		p2p anonymous net
+	</short_description>
+	<description>
+		A distributed anonymous network. WARNING: We do not provide any warranty and
+ you use i2p at your own risk!
+	</description>
+	<dependencies>
+		<dep>
+			<name>
+				glibc-solibs
+			</name>
+			<condition>
+				atleast
+			</condition>
+			<version>
+				2.11.2
+			</version>
+		</dep>
+		<dep>
+			<name>
+				jre
+			</name>
+			<condition>
+				any
+			</condition>
+			<version>
+			</version>
+		</dep>
+	</dependencies>
+	<suggests/>
+	<maintainer>
+		<name>
+			fat0troll
+		</name>
+		<email>
+			fat0troll@riseup.net
+		</email>
+	</maintainer>
+	<tags>
+		<tag>
+			net-misc
+		</tag>
+		<tag>
+			network
+		</tag>
+	</tags>
+</package>

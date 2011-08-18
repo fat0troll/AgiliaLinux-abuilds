@@ -1,0 +1,76 @@
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=libstdc++5-v3
+pkgver=3.3.6
+pkgbuild=1
+arch=('auto')
+
+shortdesc="compatibility library for old binaries"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("This is GNU C++ Compatibility library which can be useful when you using binaries/libraries compiled by GCC3"
+)
+
+source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-core-${pkgver}.tar.bz2" "ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-g++-${pkgver}.tar.bz2")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+
+tags="sys-libs libs"     			#short and long tags / длинный и короткий тег
+build_deps="" 			#
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep="fakeroot"
+
+
+#numjobs=1 #Set number of jobs while compliling, otherwise it'll be autodetected
+
+docs=				#additional files should be copied into /usr/docs/${pkgname} dir from sources
+gendeps_blacklist=
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+echo ""
+}
+
+build()
+{
+  export CFLAGS=$(echo $SLKCFLAGS | sed 's|-mtune=generic||')
+  export CXXFLAGS=$(echo $SLKCXXFLAGS | sed 's|-mtune=generic||')
+
+  cd ${srcdir}/gcc-${pkgver}
+
+  if [ "$arch" = "x86_64" ]; then
+    patch -Np0 -i $startdir/gcc-3.4.3-no_multilib_x86_64.patch || return 1
+  fi
+
+  # No fixincludes
+  sed -i -e 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+  mkdir ../gcc-build
+  cd ../gcc-build
+  ../gcc-${pkgver}/configure --prefix=/usr --enable-shared \
+      --enable-languages=c++ --enable-threads=posix --enable-__cxa_atexit \
+      --disable-multilib --libdir=/usr/lib${LIBDIRSUFFIX}
+  make all-target-libstdc++-v3 BOOT_CFLAGS="${CFLAGS}" STAGE1_CFLAGS="-O" || return 1
+  make DESTDIR=${pkgdir} install-target-libstdc++-v3 || return 1
+  # Remove includefiles and libs provided by gcc
+  rm -rf ${pkgdir}/usr/{include,share/locale}
+  rm -f ${pkgdir}/usr/lib${LIBDIRSUFFIX}/*.a
+  rm -f ${pkgdir}/usr/lib${LIBDIRSUFFIX}/libstdc++.so
+
+}
+#ran after function build() 
+#после сборки
+after_build()
+{
+ echo ""
+}

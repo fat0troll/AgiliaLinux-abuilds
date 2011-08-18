@@ -1,0 +1,73 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=libdesktop-agnostic
+pkgver=0.3.90
+pkgbuild=5
+arch=('auto')
+
+shortdesc="Desktop Agnostic Library"
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("This library provides an extensible configuration API, a unified virtual file system API, and a desktop item editor (all with pluggable backends) for GLib-based projects. It is not tied to any one desktop environment, although there are desktop-specific modules. Homepage: https://launchpad.net/libdesktop-agnostic"
+)
+
+source=("https://launchpad.net/${pkgname}/0.4/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="libs x11-libs"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into /usr/docs/${pkgname} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+before_build()
+{
+go_src_dir
+# Force source regeneration
+rm -r gen_src
+}
+
+BUILD_SYSTEM="waf"
+BUILD_KEYS="configure --prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--mandir=/usr/man \
+--docdir=/usr/doc/$pkgname-$pkgver \
+--config-backends=gconf,keyfile \
+--vfs-backends=gio \
+--desktop-entry-backends=gio,glib"
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+echo ""
+}

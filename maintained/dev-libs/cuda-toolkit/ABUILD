@@ -1,0 +1,122 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=cuda-toolkit
+pkgver=4.0.17
+ver=`echo $pkgver | cut -d . -f 1-2`
+fedora=13
+pkgbuild=1
+arch=('auto')
+
+shortdesc="NVIDIA's CUDA architecture can be programmed in the only C language environment that unlocks the processing power of GPUs to solve the most complex compute-intensive challenges."
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("NVIDIA's CUDA architecture can be programmed in the only C language environment that unlocks the processing power of GPUs to solve the most complex compute-intensive challenges.")
+
+if [ "$ARCH" = "x86_64" ] ; then
+	bits=64
+else
+	bits=32
+fi
+
+source=("http://developer.download.nvidia.com/compute/cuda/4_0/toolkit/cudatoolkit_${pkgver}_linux_${bits}_fedora${fedora}.run"
+"http://developer.download.nvidia.com/compute/cuda/4_0/ToolsSDK/cudatools_${pkgver}_linux_${bits}.run")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="libs dev-libs"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой
+#before_build()
+#{
+#echo ""
+#}
+
+build()
+{
+cd $srcdir
+sh $srcache/${loc_source_arr[0]} --noexec --keep --target toolkit >/dev/null || exit 1
+sh $srcache/${loc_source_arr[1]} --noexec --keep --target tools >/dev/null || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+cd $srcdir/toolkit
+#binaries
+find bin/ -type f -exec install -Dm755 "{}" "$pkgdir/usr/{}" \;
+chmod 644 "$pkgdir/usr/bin/nvcc.profile"
+install -Dm755 computeprof/bin/computeprof "$pkgdir/usr/bin/computeprof"
+install -Dm755 open64/bin/nvopencc "$pkgdir/usr/bin/nvopencc"
+#headers
+cd include/
+find . -type f -exec install -Dm644 "{}" "$pkgdir/usr/include/cuda/{}" \;
+mv "$pkgdir/usr/include/cuda/CL" "$pkgdir/usr/include/CL"
+cd ../
+#libraries
+if [ "$ARCH" = "x86_64" ] ; then
+	cd lib/
+	find . -type f -exec install -Dm755 "{}" "$pkgdir/usr/lib/{}" \;
+	cd ../lib64/
+	find . -type f -exec install -Dm755 "{}" "$pkgdir/usr/lib64/{}" \;
+	cd ../
+	rm -rf "$pkgdir/usr/lib32"
+	install -Dm755 computeprof/bin/cudaapitrace32.so "$pkgdir/usr/lib/"
+	install -Dm755 computeprof/bin/cudaapitrace64.so "$pkgdir/usr/lib64/"
+else
+	find lib/ -type f -exec install -Dm755 "{}" "$pkgdir/usr/{}" \;
+	install -Dm755 computeprof/bin/cudaapitrace32.so "$pkgdir/usr/lib/"
+fi
+cd open64
+find lib/ -type f -exec install -Dm755 "{}" "$pkgdir/usr/{}" \;
+# TOOLS
+cd $srcdir/tools
+cd CUPTI/include
+find . -type f -exec install -Dm644 "{}" "$pkgdir/usr/include/cuda/cupti/{}" \;
+cd ..
+find lib/ -type f -exec install -Dm755 "{}" "$pkgdir/usr/{}" \;
+cd ../Debugger/include/
+find . -type f -exec install -Dm644 "{}" "$pkgdir/usr/include/cuda/{}" \;
+cd ../../NVML/
+find . -type f -name '*.h' -exec install -Dm644 "{}" "$pkgdir/usr/include/cuda/{}" \;
+find . -type f -name '*.dtd' -exec install -Dm644 "{}" "$pkgdir/usr/share/cuda/nvml/{}" \;
+# Creating symlinks
+for _lib in $(find "$pkgdir" -name '*.so*'); do
+	_soname="$(dirname ${_lib})/$(readelf -d "$_lib" | sed -nr 's/.*Library soname: \[(.*)\].*/\1/p')"
+	if [ ! -e "${_soname}" ]; then
+		ln -s "$(basename ${_lib})" "${_soname}"
+		ln -s "$(basename ${_soname})" "${_soname/.[0-9]*/}"
+	fi
+done
+ln -s libncurses.so.5 "$pkgdir/usr/lib$LIBDIRSUFFIX/libtinfo.so.5"
+}
