@@ -23,7 +23,8 @@ tags="xapps x11-misc"
 build_deps=""
 
 provides="compiz"
-conflicts=""
+# gtk window decorator now, as I see, merged into main package...
+conflicts="compiz-decorator-gtk"
 
 adddep=""
 removedep=""
