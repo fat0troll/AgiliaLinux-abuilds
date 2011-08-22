@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=compiz-dev
-pkgver=0.9.5.0
+pkgver=0.9.5.92.1
 pkgbuild=1
 arch=('auto')
 
@@ -64,12 +64,12 @@ BUILD_KEYS="-DCMAKE_INSTALL_PREFIX=/usr \
 -DCMAKE_BUILD_TYPE=RELEASE \
 -DLIB_DIR=lib${LIBDIRSUFFIX} \
 -DLIB_SUFFIX=${LIBDIRSUFFIX} \
--DBUILD_GNOME_KEYBINDINGS="$gnome_keybind" \
--DBUILD_GTK="$gtk_decor" \
--DUSE_GCONF="$use_gconf" \
--DBUILD_KDE4="$kde_decor" \
--DBUILD_TESTING="$testing_tools" \
--DCOMPIZ_DEFAULT_PLUGINS="composite,opengl,decor,resize,place,move" \
+-DBUILD_GNOME_KEYBINDINGS=$gnome_keybind \
+-DBUILD_GTK=$gtk_decor \
+-DUSE_GCONF=$use_gconf \
+-DBUILD_KDE4=$kde_decor \
+-DBUILD_TESTING=$testing_tools \
+-DCOMPIZ_DEFAULT_PLUGINS='composite,opengl,decor,resize,place,move' \
 -DCOMPIZ_DISABLE_PLUGIN_FADE=Off \
 -DCOMPIZ_DISABLE_PLUGIN_SCREENSHOT=Off \
 -DCOMPIZ_DISABLE_PLUGIN_OBS=Off \
@@ -99,7 +99,7 @@ BUILD_KEYS="-DCMAKE_INSTALL_PREFIX=/usr \
 -DCOMPIZ_DISABLE_PLUGIN_ZOOM=Off \
 -DCOMPIZ_DISABLE_PLUGIN_IMGPNG=Off \
 -DCOMPIZ_DISABLE_PLUGIN_DBUS=Off \
--DCOMPIZ_DISABLE_PLUGIN_IMGSVG=Off
+-DCOMPIZ_DISABLE_PLUGIN_IMGSVG=Off \
 ../"
 
 #ran after function build() 
@@ -107,7 +107,11 @@ BUILD_KEYS="-DCMAKE_INSTALL_PREFIX=/usr \
 after_build()
 {
 go_src_dir
-make findcompiz_install || exit 1
+# My findcompiz_install realization
+mkdir -p $pkgdir/usr/share/cmake-2.8/Modules || exit 1
+cp cmake/FindCompiz.cmake $pkgdir/usr/share/cmake-2.8/Modules || exit 1
+
+# GNOME 3 related stuff
 if [ $gnome3 == "On" ] ; then
 	install -m755 -d "$pkgdir"/usr/share/{gnome-session/sessions,xsessions,applications}/
 	install -m644 $filedir/gnome-compiz.session "$pkgdir"/usr/share/gnome-session/sessions/
