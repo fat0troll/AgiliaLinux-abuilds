@@ -4,7 +4,7 @@
 pkgname=compiz-meta-dev
 pkgver=0.9.5
 pkgbuild=1
-arch=('auto')
+arch=('noarch')
 
 shortdesc="CompizConfig Settings Manager in Python"
 #longdesc=(""
