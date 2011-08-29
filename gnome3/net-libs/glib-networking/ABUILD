@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=glib-networking
-pkgver=2.28.5
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=2.29.15
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="Network-related giomodules for glib"
 longdesc=("Network-related giomodules for glib"
 )
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 

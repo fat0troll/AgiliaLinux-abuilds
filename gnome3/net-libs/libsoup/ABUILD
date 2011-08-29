@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libsoup
-pkgver=2.34.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=2.35.5
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="Gnome HTTP Library"
 longdesc=("Gnome HTTP Library"
 )
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
