@@ -1,8 +1,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=glib2
-pkgver=2.28.5
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=2.29.16
 pkgbuild=1
 arch=('auto')
 
@@ -10,7 +9,7 @@ shortdesc="glib2 (library of C routines)"
 #-ruler---|--------------------------------------------------------------------------|
 longdesc=("GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things.")
 
-source=("http://ftp.gnome.org/pub/gnome/sources/glib/${tree}/glib-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
