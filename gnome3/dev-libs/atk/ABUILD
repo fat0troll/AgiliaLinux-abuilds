@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=atk
-pkgver=2.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=2.1.5
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="atk (accessibility functions library)"
 longdesc=("atk is a library of accessibility functions that is used by the GTK+-2 toolkit."
 )
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
