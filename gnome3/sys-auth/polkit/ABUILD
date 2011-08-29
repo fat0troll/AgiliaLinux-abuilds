@@ -2,7 +2,7 @@
 
 # Package metadata
 pkgname=polkit
-pkgver=0.101
+pkgver=0.102
 pkgbuild=1
 arch="auto"
 
