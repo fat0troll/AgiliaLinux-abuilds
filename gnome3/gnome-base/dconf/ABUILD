@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=dconf
-pkgver=0.7.3
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=0.9.0
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="A low-level configuration system."
 longdesc=("A low-level configuration system."
 )
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/$tree/$pkgname-$pkgver.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
 
 patch_opts=("")
 
