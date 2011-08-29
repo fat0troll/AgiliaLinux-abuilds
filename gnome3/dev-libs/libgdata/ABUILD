@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libgdata
-pkgver=0.8.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=0.10.0
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="gdata online services API protocol"
 longdesc=("GLib-based library for accessing online service APIs using the GData protocol"
 )
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
