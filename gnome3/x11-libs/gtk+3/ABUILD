@@ -26,7 +26,8 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep="gtk-update-icon-cache"
+# Added because gtk-update-icon-cache needed
+adddep="gtk+2"
 removedep=""
 
 #for multi pkg abuild
