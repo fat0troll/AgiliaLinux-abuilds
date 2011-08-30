@@ -3,17 +3,13 @@
 #------------------------- Основные переменные -----------------------------------
 pkgname=gdm-gnome
 name=gdm
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.2
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GNOME graphical login program -- improved"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("GDM is the GNOME Display Manager, a graphical login program This is new version of GDM, with improved architecture. For login program for non-GNOME environmen ts, see old gdm 2.20"
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${name}/${tree}/${name}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${name}/${pkgver%.*}/${name}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
