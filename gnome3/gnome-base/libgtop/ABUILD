@@ -1,21 +1,23 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=accountsservice
-pkgver=0.6.13
+pkgname=libgtop
+pkgver=2.28.3
 pkgbuild=1
 arch=('auto')
 
-shortdesc="AccountsService library"
+shortdesc="A library that read information about processes and the running system"
+#longdesc=(""
+#)
 
-source=("http://cgit.freedesktop.org/$pkgname/snapshot/$pkgname-$pkgver.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="gnome gnome-base"
+tags="libs gnome-base"
 
 #dependencies only needed to build package
 build_deps=""
@@ -43,27 +45,31 @@ custom_opts=""
 #-------------------------- Сборка пакета ------------------------------------
 
 #ran before function build()
-#запускается перед сборкой
+#запускается перед сборкой.
+#before_build()
+#{
+#
+#}
 
 BUILD_SYSTEM="autotools"
 
-BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./autogen.sh"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
 
 BUILD_KEYS="--prefix=/usr \
 --sysconfdir=/etc \
 --localstatedir=/var \
 --libdir=/usr/lib${LIBDIRSUFFIX} \
---libexecdir=/usr/lib$LIBDIRSUFFIX/accountservice \
 --disable-static \
 --mandir=/usr/man \
 --program-prefix= \
---program-suffix="
+--program-suffix= \
+--with-libgtop-smp"
 
 INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-echo ""
-}
+#after_build()
+#{
+
+#}
