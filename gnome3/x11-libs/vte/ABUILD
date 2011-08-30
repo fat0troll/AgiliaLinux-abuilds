@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=vte
-pkgver=0.29.0
+pkgver=0.28.2
 pkgbuild=1
 arch=('auto')
 
@@ -73,7 +73,7 @@ cd build-gtk2
 	--enable-introspection \
 	--with-gtk=2.0 \
 	--enable-gtk-doc
-make
+make || exit 1
 cd ..
 
 mkdir build-gtk3
@@ -86,7 +86,7 @@ cd  build-gtk3
 	--enable-introspection \
 	--with-gtk=3.0 \
 	--enable-gtk-doc
-make
+make || exit 1
 cd ..
 }
 
@@ -97,14 +97,16 @@ after_build()
 {
 	go_src_dir
 	cd build-gtk2
-	make DESTDIR=$pkgdir install
+	make DESTDIR=$pkgdir install || exit 1
+	rm ${pkgdir}/usr/libexec/gnome-pty-helper || exit 1
 }
 
 vte3_prep()
 {
 	go_src_dir
 	cd build-gtk3
-	make DESTDIR=$pkgdir install
+	make DESTDIR=$pkgdir install || exit 1
+	rm ${pkgdir}/usr/libexec/gnome-pty-helper || exit 1
 }
 vte-common_prep()
 {

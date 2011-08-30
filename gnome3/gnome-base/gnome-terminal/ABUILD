@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-terminal
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.0.1
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GNOME terminal emulator"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("GNOME Terminal is a terminal emulation application that you can use to access a UNIX shell in the GNOME environment."
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
