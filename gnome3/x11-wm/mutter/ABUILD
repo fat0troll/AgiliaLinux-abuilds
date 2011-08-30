@@ -2,17 +2,14 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=mutter
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
 shortdesc="The next-generation WM for GNOME, with compoziting by clutter"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Mutter is a small window manager, using GTK+ and Clutter to do everything. Mutter is the clutter-based evolution of Metacity, which, as the author says, is a 'Boring window manager for the adult in you. Many window managers are like Marshmallow Froot Loops; Metacity is like Cheerios.' "
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/$pkgname/$tree/$pkgname-$pkgver.tar.bz2")
+#source=("http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
+source=("git:git://git.gnome.org/$pkgname")
 
 patch_opts=("")
 
@@ -55,7 +52,7 @@ custom_opts=""
 
 BUILD_SYSTEM="autotools"
 
-BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./autogen.sh"
 
 BUILD_KEYS="--prefix=/usr \
 --sysconfdir=/etc \
@@ -66,6 +63,7 @@ BUILD_KEYS="--prefix=/usr \
 --mandir=/usr/man \
 --program-prefix= \
 --program-suffix= \
+--disable-introspection \
 --disable-schemas-install"
 
 INSTALL_KEYS="GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$pkgdir"
