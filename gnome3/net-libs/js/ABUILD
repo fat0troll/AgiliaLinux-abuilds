@@ -54,6 +54,7 @@ custom_opts=""
 build()
 {
 	go_src_dir
+	burn_patches
 	cd js/src
 	./configure --prefix=/usr \
 		--libdir=/usr/lib${LIBDIRSUFFIX} \
