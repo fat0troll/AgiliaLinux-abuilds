@@ -2,14 +2,11 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=telepathy-logger
-pkgver=0.2.8
+pkgver=0.2.10
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Telepathy logger service"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Telepathy is a D-Bus framework for unifying real time communication, including instant messaging, voice calls and video calls. It abstracts differences between protocols to provide a unified interface for applications."
-)
 
 source=("http://telepathy.freedesktop.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
 
