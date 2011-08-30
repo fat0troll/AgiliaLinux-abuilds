@@ -3,19 +3,13 @@
 #------------------------- Основные переменные -----------------------------------
 pkgname=libunique3
 name=libunique
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.0.2
 pkgbuild=1
 arch=('auto')
 
-shortdesc="Library for writing single instance applications - shared libraries"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Unique is a library for writing single instance application. If you launch a single instance application twice, the second instance will either just quit or will send a message to the running instance.
+shortdesc="Library for writing single instance applications for GTK3 - shared libraries"
 
-Unique makes it easy to write this kind of applications, by providing a base class, taking care of all the IPC machinery needed to send messages to a running instance, and also handling the startup notification side. "
-)
-
-source=("http://ftp.gnome.org/pub/gnome/sources/${name}/$tree/${name}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${name}/${pkgver%.*}/${name}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
