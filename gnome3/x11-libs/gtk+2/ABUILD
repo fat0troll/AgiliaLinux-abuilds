@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gtk+2
-pkgver=2.24.4
+pkgver=2.24.5
 pkgbuild=1
 arch=('auto')
 
@@ -25,6 +25,7 @@ gtk_update_icon_cache()
 before_build() {
 cd "${srcdir}/gtk+-${pkgver}"
 patch -Np1 -i "${filedir}/xid-collision-debug.patch"
+patch -NRp1 -i "${filedir}/gdk_Make_background_changes_queue_a_repaint.patch"
 
 # Autoconf changes linux to linux-gnu.
 # Our host is $ARCH-slackware-linux not $ARCH-slackware-linux-gnu:
