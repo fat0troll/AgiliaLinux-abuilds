@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=vte
-pkgver=0.28.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=0.29.0
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GNOME terminal widget"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("The VTE library inserts terminal capability strings into a trie, and then uses it to determine if data received from a pseudo-terminal is a control sequence  or just random data. The sample program interpret illustrates more or less what the widget sees after it filters incoming data."
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/$tree/$pkgname-$pkgver.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
 
 patch_opts=("")
 
@@ -99,10 +95,9 @@ cd ..
 #после сборки
 after_build()
 {
-go_src_dir
-cd build-gtk2
-make DESTDIR=$pkgdir install
-rm $pkgdir/usr/libexec/vte/gnome-pty-helper
+	go_src_dir
+	cd build-gtk2
+	make DESTDIR=$pkgdir install
 }
 
 vte3_prep()
@@ -110,7 +105,6 @@ vte3_prep()
 	go_src_dir
 	cd build-gtk3
 	make DESTDIR=$pkgdir install
-	rm $pkgdir/usr/libexec/vte/gnome-pty-helper
 }
 vte-common_prep()
 {
