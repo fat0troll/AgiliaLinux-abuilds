@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gjs
-pkgver=0.7.14
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=1.29.17
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Javascript bindings for GNOME"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Makes it possible for applications to use all of GNOME's platform libraries using the Javascript language. It's mainly based on the Mozilla javascript engine and the GObject introsepection framework."
-)
 
-source=("http://download.gnome.org/sources/${pkgname}/$tree/${pkgname}-${pkgver}.tar.bz2")
+source=("http://download.gnome.org/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
@@ -22,7 +18,7 @@ patch_opts=("")
 tags="libs dev-libs"
 
 #dependencies only needed to build package
-build_deps="xulrunner-devel"
+build_deps=""
 
 provides=""
 conflicts=""
@@ -34,7 +30,7 @@ removedep=""
 pkglist=
 
 #Set number of jobs while compliling, otherwise it'll be autodetected
-#numjobs=1
+numjobs=1
 
 #additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
 docs=
