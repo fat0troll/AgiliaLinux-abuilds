@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libgnomekbd
-pkgver=3.0.0.1
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="GNOME library to manage keyboard configuration"
 longdesc=("libgnomekbd offers an API to manage the keyboard in GNOME applications."
 )
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/$tree/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
