@@ -7,9 +7,6 @@ pkgbuild=1
 arch=('auto')
 
 shortdesc="A library to parse XMP metadata"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("A library to parse XMP metadata"
-)
 
 source=("http://libopenraw.freedesktop.org/download/${pkgname}-${pkgver}.tar.gz")
 

@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libwnck3
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.5
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Window Navigator Construction Kit"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Window Navigator Construction Kit"
-)
 
-source=("ftp://ftp.gnome.org/pub/GNOME/sources/libwnck/$tree/libwnck-$pkgver.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/GNOME/sources/libwnck/${pkgver%.*}/libwnck-$pkgver.tar.bz2")
 
 patch_opts=("")
 

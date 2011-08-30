@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-backgrounds
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.2
 pkgbuild=1
 arch=('noarch')
 
 shortdesc="a set of backgrounds packaged with the GNOME desktop"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("This is a collection of desktop wallpapers created with GNOME users in mind."
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/$tree/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 

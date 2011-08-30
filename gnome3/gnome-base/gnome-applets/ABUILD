@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-applets
-pkgver=2.91.3
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Various applets for the GNOME panel"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("This package contains some applets for GNOME desktop and panel"
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/$tree/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
@@ -77,7 +73,6 @@ INSTALL_KEYS="GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$pkgdir"
 #после сборки
 after_build()
 {
-rm -f ${pkgdir}/usr/lib/*.la
 install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
 gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/${pkgname}.schemas" --domain gnome-applets-2.0 ${pkgdir}/etc/gconf/schemas/*.schemas
 rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
