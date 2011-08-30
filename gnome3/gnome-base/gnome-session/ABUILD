@@ -2,18 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-session
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
 shortdesc="The GNOME Session Manager"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("This package contains an X11-compliant session manager (similar to xsm) with GNOME extensions. When you log out, the session manager will save the state of all your GNOME apps. When you log back in, the session manager will restore your session."
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
-#source=("git:git://git.gnome.org/gnome-session")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
