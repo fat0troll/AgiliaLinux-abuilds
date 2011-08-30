@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-icon-theme-symbolic
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.4
 pkgbuild=1
 arch=('noarch')
 
 shortdesc="GNOME symbolic icons"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("GNOME symbolic icons"
-)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/$tree/$pkgname-$pkgver.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
 
 patch_opts=("")
 
