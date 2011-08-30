@@ -1,20 +1,23 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=gnome-settings-daemon
-pkgver=3.1.90
+pkgname=hwdata
+pkgver=0.223
 pkgbuild=1
-arch=('auto')
+arch=('noarch')
 
-shortdesc="daemon handling the GNOME session settings"
+shortdesc="Hardware identification and configuration data"
+#longdesc=(""
+#)
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
+source=("git:http://git.fedorahosted.org/git/hwdata.git")
+
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="gnome gnome-base"
+tags="console sys-apps"
 
 #dependencies only needed to build package
 build_deps=""
@@ -31,7 +34,7 @@ pkglist=
 #Set number of jobs while compliling, otherwise it'll be autodetected
 #numjobs=1
 
-#additional files should be copied into /usr/docs/${pkgname} dir from sources
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
 docs=
 gendeps_blacklist=
 
@@ -42,38 +45,25 @@ custom_opts=""
 #-------------------------- Сборка пакета ------------------------------------
 
 #ran before function build()
-#запускается перед сборкой
-before_build()
+#запускается перед сборкой.
+#before_build()
+#{
+#
+#}
+
+build()
 {
-cd "${srcdir}/${pkgname}-${pkgver}"
+go_src_dir
 burn_patches
-libtoolize --force
-aclocal
-autoconf
-automake
+make install DESTDIR=${pkgdir}
+# blacklist.conf handled by udev, I stay it as is.
+rm -rf $pkgdir/etc
 }
 
-BUILD_SYSTEM="autotools"
-
-BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
-
-BUILD_KEYS="--prefix=/usr \
---sysconfdir=/etc \
---localstatedir=/var \
---libdir=/usr/lib${LIBDIRSUFFIX} \
---libexecdir=/usr/bin \
---disable-static \
---mandir=/usr/man \
---program-prefix= \
---program-suffix= \
---disable-schemas-compile \
---enable-pulse"
-
-INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-echo ""
-}
+#after_build()
+#{
+
+#}
