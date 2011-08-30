@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-desktop
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Common files for GNOME desktop"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("This package includes some files that are shared between several GNOME apps."
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 

@@ -2,8 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-menus
-pkgver=3.0.0
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=3.1.90
 pkgbuild=1
 arch=('auto')
 
@@ -12,7 +11,7 @@ shortdesc="an implementation of the freedesktop menu specification for GNOME"
 longdesc=("The package contains an implementation of the draft Desktop Menu Specification from freedesktop.org. The GNOME menu layout configuration files, .directory files and assorted menu related utility programs."
 )
 
-source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/$tree/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
