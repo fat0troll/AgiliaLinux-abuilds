@@ -1,17 +1,16 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=webkitgtk
-pkgver=1.4.2
+pkgname=librest
+pkgver=0.7.9
 pkgbuild=1
 arch=('auto')
 
-shortdesc="Webkit gtk+ library"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Webkit gtk+ library"
-)
+shortdesc="a library to access 'RESTful' web services"
+#longdesc=(""
+#)
 
-source=("http://webkitgtk.org/webkit-${pkgver}.tar.gz")
+source=("http://ftp.gnome.org/pub/GNOME/sources/rest/${pkgver%.*}/rest-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
@@ -30,7 +29,7 @@ adddep=""
 removedep=""
 
 #for multi pkg abuild
-pkglist="webkitgtk3"
+pkglist=
 
 #Set number of jobs while compliling, otherwise it'll be autodetected
 #numjobs=1
@@ -45,54 +44,31 @@ custom_opts=""
 #----------------------------- Make PKG --------------------------------------
 #-------------------------- Сборка пакета ------------------------------------
 
-webkitgtk3()
-{
-	pkgname+=3
-	shortdesc="Webkit gtk+3 module"
-}
-
 #ran before function build()
-#запускается перед сборкой
+#запускается перед сборкой.
 #before_build()
 #{
-#echo ""
+#
 #}
 
-build()
-{
-go_src_dir
-mkdir build-gtk{2,3}
-( cd build-gtk2 && builders --with-gtk=2.0 )
-( cd build-gtk3 && builders --with-gtk=3.0 )
-}
+BUILD_SYSTEM="autotools"
 
-builders()
-{
-	../configure --prefix=/usr \
-		--libdir=/usr/lib$LIBDIRSUFFIX \
-		--enable-video \
-		--enable-introspection \
-		--with-font-backend=freetype \
-		--enable-gtk-doc \
-		--enable-jit \
-		--with-unicode-backend=icu \
-		--enable-3d-transforms \
-		--enable-mathml \
-		--enable-spellcheck "$@" || exit 1
-	make all stamp-po || exit 1
-}
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix="
+
+INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-cd build-gtk2
-make DESTDIR=$pkgdir install || exit 1
-}
+#after_build()
+#{
 
-webkitgtk3_prep()
-{
-	go_src_dir
-	cd build-gtk3
-	make DESTDIR=$pkgdir install || exit 1
-}
+#}
