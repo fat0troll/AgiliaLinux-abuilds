@@ -2,17 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=clutter
-pkgver=1.6.14
-tree=`echo $pkgver | cut -d . -f 1-2`
+pkgver=1.7.12
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Open GL based interactive canvas library"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Clutter is an Open GL based interactive canvas library, designed for creating fast, mainly 2D single window applications such as media box UIs, presentations, kiosk style applications and so on."
-)
 
-source=("http://www.clutter-project.org/sources/clutter/$tree/clutter-${pkgver}.tar.bz2")
+source=("http://www.clutter-project.org/sources/clutter/${pkgver%.*}/clutter-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
