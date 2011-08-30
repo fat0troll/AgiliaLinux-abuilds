@@ -1,0 +1,73 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=js
+pkgver=1.8.5
+pkgbuild=1
+arch=('auto')
+
+shortdesc="JavaScript interpreter and libraries"
+#longdesc=(""
+#)
+
+source=("http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz")
+
+patch_opts=("js185-destdir.patch 0")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="libs net-libs"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep=""
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой.
+#before_build()
+#{
+#
+#}
+
+build()
+{
+	go_src_dir
+	cd js/src
+	./configure --prefix=/usr \
+		--libdir=/usr/lib${LIBDIRSUFFIX} \
+		--with-system-nspr \
+		--enable-threadsafe
+	make || exit 1
+	make DESTDIR=${pkgdir} install || exit 1
+}
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+	go_src_dir
+	install -m 0755 shell/js ${pkgdir}/usr/bin
+	rm -f "${pkgdir}/usr/lib/libmozjs185-1.0.a"
+}
