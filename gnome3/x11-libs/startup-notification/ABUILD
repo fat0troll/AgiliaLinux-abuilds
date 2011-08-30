@@ -1,21 +1,23 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=gnome-shell
-pkgver=3.1.90
+pkgname=startup-notification
+pkgver=0.12
 pkgbuild=1
 arch=('auto')
 
-shortdesc="The next generation GNOME Shell for GNOME 3"
+shortdesc="Monitor and display application startup"
+#longdesc=(""
+#)
 
-source=("http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
+source=("http://www.freedesktop.org/software/startup-notification/releases/${pkgname}-${pkgver}.tar.gz")
 
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="gnome gnome-base"
+tags="libs x11-libs"
 
 #dependencies only needed to build package
 build_deps=""
@@ -43,15 +45,17 @@ custom_opts=""
 #-------------------------- Сборка пакета ------------------------------------
 
 #ran before function build()
-#запускается перед сборкой
-#before_build()
-#{
-#echo ""
-#}
+#запускается перед сборкой.
+before_build()
+{
+	go_src_dir
+	sed -i -e '/AC_PATH_XTRA/d' configure.in
+	autoreconf --force --install
+}
 
 BUILD_SYSTEM="autotools"
 
-BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./autogen.sh"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
 
 BUILD_KEYS="--prefix=/usr \
 --sysconfdir=/etc \
@@ -60,18 +64,13 @@ BUILD_KEYS="--prefix=/usr \
 --disable-static \
 --mandir=/usr/man \
 --program-prefix= \
---program-suffix= \
---disable-glibtest \
---disable-schemas-compile"
+--program-suffix="
 
-
-INSTALL_KEYS="GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$pkgdir"
+INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
-gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/${pkgname}.schemas" --domain gnome-shell ${pkgdir}/etc/gconf/schemas/*.schemas
-rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
-}
+#after_build()
+#{
+
+#}

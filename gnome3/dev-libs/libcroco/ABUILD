@@ -3,16 +3,12 @@
 #------------------------- Основные переменные -----------------------------------
 pkgname=libcroco
 pkgver=0.6.2
-tree=`echo $pkgver | cut -d . -f 1-2`
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GNOME CSS2 parsing and manipulation toolkit"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("a generic Cascading Style Sheet (CSS) parsing and manipulation toolkit"
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${tree}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
