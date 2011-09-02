@@ -29,7 +29,7 @@
 [ -z "${HEED_DEFAULT_DISPLAY_MANAGER}" ] && HEED_DEFAULT_DISPLAY_MANAGER=true
 
 depend() {
-	need localmount xdm-setup
+	need localmount
 	use consolekit xfs
 
 	provide bumblebee
