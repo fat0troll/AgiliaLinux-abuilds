@@ -29,7 +29,7 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep=""
+adddep="virtualgl nvidia-utils-bumblebee bash>=4.0"
 removedep=""
 
 #for multi pkg abuild
