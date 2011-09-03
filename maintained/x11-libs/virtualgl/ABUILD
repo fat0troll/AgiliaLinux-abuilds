@@ -4,7 +4,7 @@
 pkgname=virtualgl
 name=VirtualGL
 pkgver=2.2.90
-srcbranch="2.2.90 (2.3beta1)"
+srcbranch="2.2.90%20(2.3beta1)"
 pkgbuild=1
 arch=('auto')
 
@@ -18,9 +18,7 @@ else
 	rarch=i386
 fi	
 
-#source=("http://downloads.sourceforge.net/project/virtualgl/VirtualGL/${srcbranch}/$name-$pkgver.$rarch.rpm")
-# Download manually, mkpkg buggy :-(
-source=("$name-$pkgver.$rarch.rpm")
+source=("http://downloads.sourceforge.net/project/virtualgl/VirtualGL/${srcbranch}/$name-$pkgver.$rarch.rpm")
 
 patch_opts=("")
 
