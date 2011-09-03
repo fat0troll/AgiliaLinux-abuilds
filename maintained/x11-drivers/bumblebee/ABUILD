@@ -15,7 +15,8 @@ source=("https://github.com/downloads/Bumblebee-Project/Bumblebee/$pkgname-$pkgv
 patch_opts=("")
 
 config_files="etc/bumblebee/xorg.conf.nvidia
-etc/bumblebee/bumblebee.conf"
+etc/bumblebee/bumblebee.conf
+etc/conf.d/bumblebee"
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
@@ -63,14 +64,13 @@ mkdir -p install-temp
 DISTRO=gentoo ./install --dest-dir=install-temp --actions=build,install --skip-stages=uninstall,welcome,finish,determinedistro
 cd install-temp
 cp -a etc usr "$pkgdir"
-# And now Agilia-related magic. Thanks for gentoo files (obviliously created by MrMEE...
+# And now Agilia-related magic.
 cd $pkgdir
 rm etc/init.d/bumblebee
 mkdir etc/conf.d
 cp $filedir/bumblebee.confd etc/conf.d/bumblebee
 cp $filedir/bumblebee.initd etc/init.d/bumblebee
 chmod +x etc/init.d/bumblebee
-sed -i "s#LIBDIR#lib$LIBDIRSUFFIX#g" etc/init.d/bumblebee
 }
 
 
