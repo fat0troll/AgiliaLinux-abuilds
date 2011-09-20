@@ -12,8 +12,6 @@ start() {
 	if pgrep plymouthd >/dev/null; then
 		/bin/plymouth --quit
 		chvt 7
-		# Hook for restoring console settings in tty1
-		/etc/init.d/termencoding restart
         fi
 	eend $?
 }
