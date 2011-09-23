@@ -37,7 +37,7 @@ docs=
 gendeps_blacklist=
 
 #custom_opts: skip_validate skip_gendeps no_postperm no_strip
-custom_opts=""
+custom_opts="skip_gendeps"
 
 #----------------------------- Make PKG --------------------------------------
 #-------------------------- Сборка пакета ------------------------------------
@@ -69,4 +69,16 @@ mkdir -p $pkgdir/usr/doc/${pkgname}-${pkgver}/
 cp -v ${pkgdir}/usr/share/icons/elementary*/{AUTHORS,COPYING,CONTRIBUTORS} \
 	$pkgdir/usr/doc/${pkgname}-${pkgver}/
 rm -v ${pkgdir}/usr/share/icons/elementary*/{AUTHORS,COPYING,CONTRIBUTORS}
+
+
+# AgiliaLinux artwork
+cp -v ${filedir}/start-here-22.svg ${pkgdir}/usr/share/icons/elementary/panel/22/start-here.svg
+cp -v ${filedir}/start-here-22-black.svg ${pkgdir}/usr/share/icons/elementary-mono-dark/panel/22/start-here.svg
+cp -v ${filedir}/start-here-24.svg ${pkgdir}/usr/share/icons/elementary/panel/24/start-here.svg
+cp -v ${filedir}/distributor-logo-24.svg ${pkgdir}/usr/share/icons/elementary/places/24/distributor-logo.svg
+cp -v ${filedir}/distributor-logo-32.svg ${pkgdir}/usr/share/icons/elementary/places/32/distributor-logo.svg
+cp -v ${filedir}/distributor-logo-48.svg ${pkgdir}/usr/share/icons/elementary/places/48/distributor-logo.svg
+cp -v ${filedir}/distributor-logo-64.svg ${pkgdir}/usr/share/icons/elementary/places/64/distributor-logo.svg
+cp -v ${filedir}/distributor-logo-128.svg ${pkgdir}/usr/share/icons/elementary/places/128/distributor-logo.svg
+
 }
