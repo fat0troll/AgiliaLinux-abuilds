@@ -1,18 +1,18 @@
-#ABUILD creat`ed by/создан: fat0troll, fat0troll at riseup.net 
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gobject-introspection
-pkgver=1.29.18
+pkgver=1.30.0
 pkgbuild=1
 arch=('auto')
 
-shortdesc="GObject Introspection"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("The goal of the project is to describe the APIs and  collect them in a uniform, machine readable format."
-)
+shortdesc="Introspection system for GObject-based libraries"
+#longdesc=(""
+#)
 
-#source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
-source=("git:git://git.gnome.org/$pkgname")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz")
+
+patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
@@ -34,7 +34,7 @@ pkglist=
 #Set number of jobs while compliling, otherwise it'll be autodetected
 #numjobs=1
 
-#additional files should be copied into /usr/docs/${pkgname} dir from sources
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
 docs=
 gendeps_blacklist=
 
@@ -45,15 +45,15 @@ custom_opts=""
 #-------------------------- Сборка пакета ------------------------------------
 
 #ran before function build()
-#запускается перед сборкой
-before_build()
-{
-echo ""
-}
+#запускается перед сборкой.
+#before_build()
+#{
+#
+#}
 
 BUILD_SYSTEM="autotools"
 
-BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./autogen.sh"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
 
 BUILD_KEYS="--prefix=/usr \
 --sysconfdir=/etc \
@@ -68,7 +68,7 @@ INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-echo ""
-}
+#after_build()
+#{
+
+#}
