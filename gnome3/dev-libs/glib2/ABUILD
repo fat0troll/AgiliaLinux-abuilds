@@ -1,7 +1,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=glib2
-pkgver=2.29.16
+pkgver=2.30.0
 pkgbuild=1
 arch=('auto')
 
@@ -12,6 +12,9 @@ longdesc=("GLib is a library which includes support routines for C such as lists
 source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-${pkgver}.tar.bz2")
 
 patch_opts=("")
+
+config_files="etc/profile.d/libglib2.csh
+etc/profile.d/libglib2.sh"
 
 #----------------------------- MOPS vars --------------------------------------
 #--------------------- Специфичные для MOPSLinux ------------------------------
@@ -63,11 +66,7 @@ mkdir -p $pkgdir/etc/profile.d/
 cp -a $filedir/libglib2.{csh,sh} $pkgdir/etc/profile.d/
 chown root:root $pkgdir/etc/profile.d/*
 chmod 755 $pkgdir/etc/profile.d/*
-mv $pkgdir/etc/profile.d/libglib2.csh $pkgdir/etc/profile.d/libglib2.csh.new
-mv $pkgdir/etc/profile.d/libglib2.sh $pkgdir/etc/profile.d/libglib2.sh.new
 
-mkdir -p $pkgdir/install
-zcat $filedir/doinst.sh.gz > $pkgdir/install/doinst.sh
 for y in $pkgdir/etc/bash_completion.d/* ; do
 	chmod -x $y
 done
