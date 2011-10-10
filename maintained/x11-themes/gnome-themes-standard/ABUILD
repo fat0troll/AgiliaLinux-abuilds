@@ -1,24 +1,24 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=gtk+3
-pkgver=3.2.0
+pkgname=gnome-themes-standard
+pkgver=3.2.0.2
 pkgbuild=1
 arch=('auto')
 
-shortdesc="GTK+ Toolkit (v.3)"
+shortdesc="GNOME 3 themes"
 #-ruler---|--------------------------------------------------------------------------|
-longdesc=("This is GTK+, a multi-platform toolkit for creating graphical user interfaces. Offering a complete set of widgets, GTK+ is suitable for projects ranging from small one-off projects to complete application suites."
+longdesc=("Standard GNOME 3/GTK+3 themes"
 )
 
-source=("http://ftp.gnome.org/pub/gnome/sources/gtk+/${pkgver%.*}/gtk+-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*.*}/$pkgname-$pkgver.tar.bz2")
 
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="libs x11-libs"
+tags="themes x11-themes"
 
 #dependencies only needed to build package
 build_deps=""
@@ -26,7 +26,7 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep="gtk-update-icon-cache"
+adddep=""
 removedep=""
 
 #for multi pkg abuild
@@ -54,7 +54,7 @@ custom_opts=""
 
 BUILD_SYSTEM="autotools"
 
-BUILD_WORD="CXX=/bin/false ./configure"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
 
 BUILD_KEYS="--prefix=/usr \
 --sysconfdir=/etc \
@@ -63,11 +63,7 @@ BUILD_KEYS="--prefix=/usr \
 --disable-static \
 --mandir=/usr/man \
 --program-prefix= \
---program-suffix= \
---enable-gtk2-dependency \
---disable-schemas-compile \
---enable-introspection \
---disable-packagekit"
+--program-suffix="
 
 INSTALL_KEYS="DESTDIR=$pkgdir"
 
@@ -75,5 +71,5 @@ INSTALL_KEYS="DESTDIR=$pkgdir"
 #после сборки
 after_build()
 {
-install -Dm644 $filedir/settings.ini $pkgdir/etc/gtk-3.0/settings.ini
+echo ""
 }
