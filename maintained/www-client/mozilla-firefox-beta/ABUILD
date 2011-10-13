@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=mozilla-firefox-unstableshment
-pkgver=7.0alpha2_aurora20110807
+pkgver=9.0alpha1_build20110926
 pkgbuild=1
 arch=('auto')
 
