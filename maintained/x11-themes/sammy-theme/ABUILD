@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=sammy-theme
-pkgver=0.5.0
+pkgver=0.5.1
 pkgbuild=1
 arch=('noarch')
 
@@ -65,7 +65,7 @@ after_build()
 {
 	cd $pkgdir
 	# Removes author's temporary files.
-	find . -name ~ -exec rm {} \; || exit 1
+	find . -name *~ -exec rm {} \; || exit 1
 	# Removes GNOME Shell themes for now because GNOME Shell still uncompiled. Will be in separated packages.
 	find . -name gnome-shell -type d -exec rm -rf {} \;
 	# Chmodding.
