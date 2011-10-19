@@ -1,0 +1,74 @@
+#ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=sammy-theme
+pkgver=0.5.0
+pkgbuild=1
+arch=('noarch')
+
+shortdesc="Sammy GNOME GTK+2/GTK+3 theme"
+longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and adwaita and unico for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov."
+)
+
+source=("http://dl.dropbox.com/u/933063/gnome-look/sammy-$pkgver.zip")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+#short and long tags / длинный и короткий тег
+tags="themes x11-themes"
+
+#dependencies only needed to build package
+build_deps=""
+
+provides=""
+conflicts=""
+
+adddep="gtk-engines gnome-themes-standard gtk3-engine-unico"
+removedep=""
+
+#for multi pkg abuild
+pkglist=
+
+#Set number of jobs while compliling, otherwise it'll be autodetected
+#numjobs=1
+
+#additional files should be copied into ${pkgdir}/usr/doc/${pkgname}-${pkgver} dir from sources
+docs=
+gendeps_blacklist=
+
+#custom_opts: skip_validate skip_gendeps no_postperm no_strip
+custom_opts=""
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+#ran before function build()
+#запускается перед сборкой.
+#before_build()
+#{
+#
+#}
+
+build()
+{
+	mkdir -p $pkgdir/usr/share/themes
+	cd $pkgdir/usr/share/themes/
+	unzip $srcache/$loc_source_arr || exit 1
+}
+
+
+#ran after function build() 
+#после сборки
+after_build()
+{
+	cd $pkgdir
+	# Removes author's temporary files.
+	find . -name ~ -exec rm {} \; || exit 1
+	# Removes GNOME Shell themes for now because GNOME Shell still uncompiled. Will be in separated packages.
+	find . -name gnome-shell -type d -exec rm -rf {} \;
+	# Chmodding.
+	find . -type d -exec chmod 755 {} \; || exit 1
+	find . -type f -exec chmod 644 {} \; || exit 1
+}

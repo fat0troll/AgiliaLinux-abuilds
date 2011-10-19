@@ -1,0 +1,51 @@
+#----------------------------- General vars --------------------------------------
+#------------------------- Основные переменные -----------------------------------
+pkgname=sammy-theme
+pkgver=0.5.0
+pkgbuild=1
+arch=('noarch')
+
+shortdesc="Sammy GNOME/GTK+2/3 theme."
+#-ruler---|--------------------------------------------------------------------------|
+longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and adwaita and unico for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov."
+)
+
+source=("sammy-$pkgver.zip n")
+
+patch_opts=("")
+
+#----------------------------- AgiliaLinux vars --------------------------------------
+#--------------------- Специфичные для AgiliaLinux ------------------------------
+
+tags="x11-themes themes"     			#short and long tags / длинный и короткий тег
+build_deps="" 			#
+
+provides=""
+conflicts=""
+
+adddep="gtk-engines"
+removedep=""
+
+
+#numjobs=1 #Set number of jobs while compliling, otherwise it'll be autodetected
+
+docs=				#additional files should be copied into /usr/docs/${pkgname} dir from sources
+gendeps_blacklist=
+
+#----------------------------- Make PKG --------------------------------------
+#-------------------------- Сборка пакета ------------------------------------
+
+build ()
+{
+mkdir -p $pkgdir/usr/share/themes/
+cd $pkgdir/usr/share/themes
+unzip $srcache/$loc_source_arr
+}
+after_build()
+{
+cd $pkgdir
+find . -name ~ -exec rm {} \; || exit 1
+# We remove GNOME Shell themes for now, will be separated in packages when GNOME Shell will be in AgiliaLinux
+find . -type d -exec chmod 755 {} \; || exit 1
+find . -type f -exec chmod 644 {} \; || exit 1
+}
