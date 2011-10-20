@@ -2,16 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=vala
-pkgver=0.13.3
+pkgver=0.14.0
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Vala (Compiler for the GObject type system)"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Vala is a new programming language that aims to bring modern programming language features to GNOME developers without imposing any additional runtime requirements and without using a different ABI compared to applications and libraries written in C."
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
 
 
 patch_opts=("")
