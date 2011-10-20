@@ -2,16 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gsettings-desktop-schemas
-pkgver=3.1.3
+pkgver=3.2.0
 pkgbuild=1
 arch=('noarch')
 
 shortdesc="Shared GSettings schemas for the desktop"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("gsettings-desktop-schemas contains a collection of GSettings schemas for settings shared by various components of a desktop."
-)
 
-source=("http://download.gnome.org/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 

@@ -8,7 +8,6 @@ arch="auto"
 
 # Package description
 shortdesc=("Authorization Framework")
-longdesc=("Application development toolkit for controlling system-wide privileges")
 
 # Source URL
 source=("http://hal.freedesktop.org/releases/polkit-${pkgver}.tar.gz")
