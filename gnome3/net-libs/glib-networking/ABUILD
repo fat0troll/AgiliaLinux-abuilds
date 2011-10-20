@@ -2,14 +2,11 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=glib-networking
-pkgver=2.29.15
+pkgver=2.30.1
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Network-related giomodules for glib"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Network-related giomodules for glib"
-)
 
 source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 

@@ -2,16 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libsoup
-pkgver=2.35.5
+pkgver=2.36.1
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Gnome HTTP Library"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Gnome HTTP Library"
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 

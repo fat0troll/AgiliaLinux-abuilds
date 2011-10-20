@@ -2,14 +2,11 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=libgweather
-pkgver=3.1.3
+pkgver=3.2.0
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GWeather shared library"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("libgweather is a library to access weather information from online services for numerous locations."
-)
 
 source=("ftp://ftp.gnome.org/pub/GNOME/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
