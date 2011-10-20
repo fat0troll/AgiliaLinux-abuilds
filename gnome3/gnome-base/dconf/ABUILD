@@ -2,14 +2,11 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=dconf
-pkgver=0.9.0
+pkgver=0.10.0
 pkgbuild=1
 arch=('auto')
 
 shortdesc="A low-level configuration system."
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("A low-level configuration system."
-)
 
 source=("ftp://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2")
 
