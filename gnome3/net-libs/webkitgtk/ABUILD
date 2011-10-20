@@ -2,14 +2,11 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=webkitgtk
-pkgver=1.4.2
+pkgver=1.6.1
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Webkit gtk+ library"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("Webkit gtk+ library"
-)
 
 source=("http://webkitgtk.org/webkit-${pkgver}.tar.gz")
 
