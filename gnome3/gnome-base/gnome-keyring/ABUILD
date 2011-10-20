@@ -2,16 +2,13 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=gnome-keyring
-pkgver=3.1.4
+pkgver=3.2.1
 pkgbuild=1
 arch=('auto')
 
 shortdesc="GNOME Password management daemon"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("GNOME Password management daemon"
-)
 
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.bz2")
 
 patch_opts=("")
 
@@ -68,7 +65,7 @@ BUILD_KEYS="--prefix=/usr \
 --with-pam-dir=/lib$LIBDIRSUFFIX/security \
 --with-root-certs=/etc/ssl/certs \
 --disable-schemas-compile \
---with-gtk=3.0"
+--disable-update-mime"
 
 INSTALL_KEYS="DESTDIR=$pkgdir"
 

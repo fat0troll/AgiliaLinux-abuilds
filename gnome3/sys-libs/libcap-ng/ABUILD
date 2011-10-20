@@ -1,21 +1,23 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=libnotify
-pkgver=0.7.4
+pkgname=libcap-ng
+pkgver=0.6.6
 pkgbuild=1
 arch=('auto')
 
-shortdesc="sends desktop notifications to a notification daemon"
+shortdesc="A library intended to make programming with POSIX capabilities much easier than the traditional libcap"
+#longdesc=(""
+#)
 
-source=("ftp://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*}/$pkgname-${pkgver}.tar.bz2")
+source=("http://people.redhat.com/sgrubb/$pkgname/$pkgname-$pkgver.tar.gz")
 
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="libs x11-libs"
+tags="libs sys-libs"
 
 #dependencies only needed to build package
 build_deps=""
@@ -43,10 +45,10 @@ custom_opts=""
 #-------------------------- Сборка пакета ------------------------------------
 
 #ran before function build()
-#запускается перед сборкой
+#запускается перед сборкой.
 #before_build()
 #{
-#echo ""
+#
 #}
 
 BUILD_SYSTEM="autotools"
@@ -60,13 +62,14 @@ BUILD_KEYS="--prefix=/usr \
 --disable-static \
 --mandir=/usr/man \
 --program-prefix= \
---program-suffix="
+--program-suffix= \
+--with-python=no"
 
 INSTALL_KEYS="DESTDIR=$pkgdir"
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-echo ""
-}
+#after_build()
+#{
+
+#}
