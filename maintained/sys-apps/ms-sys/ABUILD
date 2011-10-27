@@ -1,21 +1,23 @@
 #ABUILD created by/создан: fat0troll, fat0troll at riseup.net 
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
-pkgname=webkitgtk
-pkgver=1.6.1
+pkgname=ms-sys
+pkgver=2.2.1
 pkgbuild=1
 arch=('auto')
 
-shortdesc="Webkit gtk+ library"
+shortdesc="Tool for writing MS-compatible boot records"
+#longdesc=(""
+#)
 
-source=("http://webkitgtk.org/webkit-${pkgver}.tar.gz")
+source=("http://downloads.sourceforge.net/sourceforge/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 
 patch_opts=("")
 
 #----------------------------- AgiliaLinux vars --------------------------------------
 #--------------------- Специфичные для AgiliaLinux ------------------------------
 #short and long tags / длинный и короткий тег
-tags="libs net-libs"
+tags="console sys-apps"
 
 #dependencies only needed to build package
 build_deps=""
@@ -27,7 +29,7 @@ adddep=""
 removedep=""
 
 #for multi pkg abuild
-pkglist="webkitgtk3"
+pkglist=
 
 #Set number of jobs while compliling, otherwise it'll be autodetected
 #numjobs=1
@@ -42,55 +44,25 @@ custom_opts=""
 #----------------------------- Make PKG --------------------------------------
 #-------------------------- Сборка пакета ------------------------------------
 
-webkitgtk3()
-{
-	pkgname+=3
-	shortdesc="Webkit gtk+3 module"
-}
-
 #ran before function build()
-#запускается перед сборкой
+#запускается перед сборкой.
 #before_build()
 #{
-#echo ""
+#
 #}
 
 build()
 {
 go_src_dir
-mkdir build-gtk{2,3}
-( cd build-gtk2 && builders --with-gtk=2.0 )
-( cd build-gtk3 && builders --with-gtk=3.0 )
+burn_patches
+make
+make PREFIX=$pkgdir install || exit 1
 }
 
-builders()
-{
-	../configure --prefix=/usr \
-		--libdir=/usr/lib$LIBDIRSUFFIX \
-		--enable-video \
-		--enable-introspection \
-		--with-font-backend=freetype \
-		--enable-gtk-doc \
-		--enable-jit \
-		--with-unicode-backend=icu \
-		--enable-3d-transforms \
-		--enable-mathml \
-		--enable-spellcheck "$@" || exit 1
-	make all stamp-po || exit 1
-}
 
 #ran after function build() 
 #после сборки
-after_build()
-{
-	go_src_dir
-	cd build-gtk2
-	make DESTDIR=$pkgdir install || exit 1
-}
+#after_build()
+#{
 
-webkitgtk3_prep()
-{
-	go_src_dir
-	cd build-gtk3
-	make DESTDIR=$pkgdir install || exit 1
-}
+#}

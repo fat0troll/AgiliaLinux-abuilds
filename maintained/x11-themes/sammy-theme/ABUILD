@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=sammy-theme
-pkgver=0.5.1
+pkgver=0.7.1
 pkgbuild=1
 arch=('noarch')
 
@@ -25,7 +25,7 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep="gtk-engines gnome-themes-standard gtk3-engine-unico"
+adddep="gtk-engines gtk3-engine-unico"
 removedep=""
 
 #for multi pkg abuild
