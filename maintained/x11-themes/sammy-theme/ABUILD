@@ -7,7 +7,7 @@ pkgbuild=2
 arch=('noarch')
 
 shortdesc="Sammy theme packaging script"
-longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. Contains GTK+2, GTK+3, GNOME and Metacity, xfwm4, Openbox, GNOME Shell themes. This package contains theme for "
+longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. Contains GTK+2, GTK+3, GNOME and Metacity, xfwm4, Openbox, GNOME Shell themes."
 )
 
 source=("http://dl.dropbox.com/u/933063/gnome-look/sammy-$pkgver.zip")
@@ -47,35 +47,35 @@ custom_opts=""
 gtk2() {
 	pkgname=gtk2-sammy-theme
 	shortdesc="GTK+2 Sammy Theme"
-	longdesc="${longdesc} GTK+2."
+	longdesc="This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. This package contains GTK+2 theme."
 	adddep="gtk-engines"
 }
 
 gtk3() {
 	pkgname=gtk3-sammy-theme
 	shortdesc="GTK+3 Sammy Theme"
-	longdesc="${longdesc} GTK+3."
+	longdesc="This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. This package contains GTK+3 theme."
 	adddep="gtk3-engine-unico"
 }
 
 gnome() {
 	pkgname=gnome-sammy-theme
 	shortdesc="GNOME Sammy Theme"
-	longdesc="${longdesc} whole GNOME."
+	longdesc="This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. This package contains GNOME theme."
 	adddep="metacity gtk2-sammy-theme"
 }
 
 xfwm4 () {
 	pkgname=xfwm4-sammy-theme
 	shortdesc="xfwm4 Sammy Theme"
-	longdesc="${longdesc} xfwm4."
+	longdesc="This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. This package contains xfwm4 theme."
 	adddep="xfwm4"
 }
 
 openbox () {
 	pkgname=openbox-sammy-theme
 	shortdesc="Openbox Sammy Theme"
-	longdesc="${longdesc} Openbox."
+	longdesc="This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. This package contains Openbox theme."
 	adddep="openbox"
 }
 
