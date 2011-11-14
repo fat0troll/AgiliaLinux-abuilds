@@ -3,11 +3,11 @@
 #------------------------- Основные переменные -----------------------------------
 pkgname=sammy-theme
 pkgver=0.7.4
-pkgbuild=1
+pkgbuild=2
 arch=('noarch')
 
-shortdesc="Sammy GNOME GTK+2/GTK+3 theme"
-longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and adwaita and unico for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov."
+shortdesc="Sammy theme packaging script"
+longdesc=("This is Sammy theme, third generation of well-known Prudence, based on Clearlook engine and pixmap for gtk+2 and unico and pixmaps for gtk+3. Original idea by Mark Chistyakov, Next Generation and Third Generation by Andrey Tverdov. Contains GTK+2, GTK+3, GNOME and Metacity, xfwm4, Openbox, GNOME Shell themes. This package contains theme for "
 )
 
 source=("http://dl.dropbox.com/u/933063/gnome-look/sammy-$pkgver.zip")
@@ -25,11 +25,11 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep="gtk-engines gtk3-engine-unico"
+adddep=""
 removedep=""
 
 #for multi pkg abuild
-pkglist=
+pkglist="gtk2 gtk3 gnome xfwm4 openbox"
 
 #Set number of jobs while compliling, otherwise it'll be autodetected
 #numjobs=1
@@ -44,6 +44,41 @@ custom_opts=""
 #----------------------------- Make PKG --------------------------------------
 #-------------------------- Сборка пакета ------------------------------------
 
+gtk2() {
+	pkgname=gtk2-sammy-theme
+	shortdesc="GTK+2 Sammy Theme"
+	longdesc="${longdesc} GTK+2."
+	adddep="gtk-engines"
+}
+
+gtk3() {
+	pkgname=gtk3-sammy-theme
+	shortdesc="GTK+3 Sammy Theme"
+	longdesc="${longdesc} GTK+3."
+	adddep="gtk3-engines-unico"
+}
+
+gnome() {
+	pkgname=gnome-sammy-theme
+	shortdesc="GNOME Sammy Theme"
+	longdesc="${longdesc} whole GNOME."
+	adddep="metacity gtk2-sammy-theme"
+}
+
+xfwm4 () {
+	pkgname=xfwm4-sammy-theme
+	shortdesc="xfwm4 Sammy Theme"
+	longdesc="${longdesc} xfwm4."
+	adddep="xfwm4"
+}
+
+openbox () {
+	pkgname=openbox-sammy-theme
+	shortdesc="Openbox Sammy Theme"
+	longdesc="${longdesc} Openbox."
+	adddep="openbox"
+}
+
 #ran before function build()
 #запускается перед сборкой.
 #before_build()
@@ -53,22 +88,56 @@ custom_opts=""
 
 build()
 {
-	mkdir -p $pkgdir/usr/share/themes
-	cd $pkgdir/usr/share/themes/
-	unzip $srcache/$loc_source_arr || exit 1
+	echo "Going to package files¸ dude!"
 }
 
+gtk2_prep() {
+	mkdir -p $pkgdir/usr/share/themes/{Sammy,SammyDark,SammyMonochrome}
+	for i in Sammy SammyDark SammyMonochrome; do
+		mv $srcdir/$i/gtk-2.0/ $pkgdir/usr/share/themes/$i/
+	done
+	find $pkgdir -name *~ -exec rm {} \; || exit 1
+	find $pkgdir -type d -exec chmod 755 {} \; || exit 1
+	find $pkgdir -type f -exec chmod 644 {} \; || exit 1
+}
 
-#ran after function build() 
-#после сборки
-after_build()
-{
-	cd $pkgdir
-	# Removes author's temporary files.
-	find . -name *~ -exec rm {} \; || exit 1
-	# Removes GNOME Shell themes for now because GNOME Shell still uncompiled. Will be in separated packages.
-	find . -name gnome-shell -type d -exec rm -rf {} \;
-	# Chmodding.
-	find . -type d -exec chmod 755 {} \; || exit 1
-	find . -type f -exec chmod 644 {} \; || exit 1
+gtk3_prep() {
+	mkdir -p $pkgdir/usr/share/themes/{Sammy,SammyDark,SammyMonochrome}
+	for i in Sammy SammyDark SammyMonochrome; do
+		mv $srcdir/$i/gtk-3.0/ $pkgdir/usr/share/themes/$i/
+	done
+	find $pkgdir -name *~ -exec rm {} \; || exit 1
+	find $pkgdir -type d -exec chmod 755 {} \; || exit 1
+	find $pkgdir -type f -exec chmod 644 {} \; || exit 1
+}
+
+gnome_prep() {
+	mkdir -p $pkgdir/usr/share/themes/{Sammy,SammyDark,SammyMonochrome}
+	for i in Sammy SammyDark SammyMonochrome; do
+		mv $srcdir/$i/index.theme $pkgdir/usr/share/themes/$i/
+	done
+	mv $srcdir/Sammy/metacity-1/ $pkgdir/usr/share/themes/Sammy/
+	find $pkgdir -name *~ -exec rm {} \; || exit 1
+	find $pkgdir -type d -exec chmod 755 {} \; || exit 1
+	find $pkgdir -type f -exec chmod 644 {} \; || exit 1
+}
+
+xfwm4_prep() {
+	mkdir -p $pkgdir/usr/share/themes/{Sammy,SammyDark}
+	for i in Sammy SammyDark; do
+		mv $srcdir/$i/xfwm4/ $pkgdir/usr/share/themes/$i/
+	done
+	find $pkgdir -name *~ -exec rm {} \; || exit 1
+	find $pkgdir -type d -exec chmod 755 {} \; || exit 1
+	find $pkgdir -type f -exec chmod 644 {} \; || exit 1
+}
+
+openbox_prep() {
+	mkdir -p $pkgdir/usr/share/themes/{Sammy,SammyDark}
+	for i in Sammy SammyDark; do
+		mv $srcdir/$i/openbox-3/ $pkgdir/usr/share/themes/$i/
+	done
+	find $pkgdir -name *~ -exec rm {} \; || exit 1
+	find $pkgdir -type d -exec chmod 755 {} \; || exit 1
+	find $pkgdir -type f -exec chmod 644 {} \; || exit 1
 }
