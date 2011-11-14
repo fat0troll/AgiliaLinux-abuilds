@@ -55,7 +55,7 @@ gtk3() {
 	pkgname=gtk3-sammy-theme
 	shortdesc="GTK+3 Sammy Theme"
 	longdesc="${longdesc} GTK+3."
-	adddep="gtk3-engines-unico"
+	adddep="gtk3-engine-unico"
 }
 
 gnome() {
