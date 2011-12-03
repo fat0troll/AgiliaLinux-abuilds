@@ -7,9 +7,6 @@ pkgbuild=1
 arch=('auto')
 
 shortdesc="e-book reader"
-#-ruler---|--------------------------------------------------------------------------|
-longdesc=("An e-book reader for Linux"
-)
 
 source=("http://only.mawhrin.net/fbreader/fbreader-sources-$pkgver.tgz")
 
@@ -60,12 +57,12 @@ export UI_TYPE=gtk
 export TARGET_STATUS=release
 export LIBDIR=/usr/lib${LIBDIRSUFFIX}
 
-cd $startdir/src/fbreader-$pkgver
+cd $srcdir/fbreader-$pkgver
 
 patch -p0 makefiles/config.mk < $filedir/build-fix.patch
 export srcdir
 make INSTALLDIR=/usr || return 1
-make INSTALLDIR=/usr DESTDIR=$startdir/pkg install
+make INSTALLDIR=/usr DESTDIR=$pkgdir install
 }
 #ran after function build() 
 #после сборки
