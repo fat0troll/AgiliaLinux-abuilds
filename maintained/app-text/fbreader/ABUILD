@@ -3,12 +3,12 @@
 #------------------------- Основные переменные -----------------------------------
 pkgname=fbreader
 pkgver=0.12.10
-pkgbuild=1
+pkgbuild=3
 arch=('auto')
 
 shortdesc="e-book reader"
 
-source=("http://only.mawhrin.net/fbreader/fbreader-sources-$pkgver.tgz")
+source=("http://old.fbreader.org/fbreader-sources-$pkgver.tgz")
 
 patch_opts=("")
 
@@ -56,11 +56,10 @@ export TARGET_ARCH=desktop
 export UI_TYPE=gtk
 export TARGET_STATUS=release
 export LIBDIR=/usr/lib${LIBDIRSUFFIX}
-
-cd $srcdir/fbreader-$pkgver
-
-patch -p0 makefiles/config.mk < $filedir/build-fix.patch
 export srcdir
+cd $srcdir/fbreader-$pkgver
+patch -p0 makefiles/config.mk < $filedir/build-fix.patch
+sed -i 's#Library::Library &Library::Instance()#Library \&Library::Instance()#' fbreader/src/library/Library.cpp
 make INSTALLDIR=/usr || return 1
 make INSTALLDIR=/usr DESTDIR=$pkgdir install
 }
