@@ -31,7 +31,7 @@ build_deps=""
 provides=""
 conflicts="nvidia-driver"
 
-adddep=""
+adddep="nvidia-kernel"
 removedep=""
 
 #for multi pkg abuild
