@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=nvidia-utils-bumblebee
-pkgver=285.05.09
+pkgver=290.10
 pkgbuild=1
 arch=('auto')
 
@@ -29,7 +29,7 @@ tags="drivers x11-drivers"
 build_deps=""
 
 provides=""
-conflicts=""
+conflicts="nvidia-driver"
 
 adddep=""
 removedep=""
@@ -74,6 +74,7 @@ build()
 after_build()
 {
 	cd $pkgdir/usr/lib$LIBDIRSUFFIX/nvidia-bumblebee || exit 1
-	ln -s libGL.so.$pkgver libGL.so
+	ln -s libGL.so.$pkgver libGL.so.1
+	ln -s libGL.so.1 libGL.so
 	ln -s libglx.so.$pkgver libglx.so
 }

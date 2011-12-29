@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=bumblebee
-pkgver=2.3.1
+pkgver=2.4.1
 pkgbuild=1
 arch=('auto')
 
@@ -29,7 +29,7 @@ build_deps=""
 provides=""
 conflicts=""
 
-adddep="virtualgl nvidia-utils-bumblebee bash>=4.0"
+adddep="virtualgl nvidia-utils-bumblebee bash>=4.0 libgl libglx"
 removedep=""
 
 #for multi pkg abuild
@@ -57,20 +57,12 @@ custom_opts=""
 
 build()
 {
-go_src_dir
-burn_patches
-# MrMEE, you have (IMO) ugly custom installer with full set of hacks. Why you don't use autotools?
-mkdir -p install-temp
-DISTRO=gentoo ./install --dest-dir=install-temp --actions=build,install --skip-stages=uninstall,welcome,finish,determinedistro
-cd install-temp
-cp -a etc usr "$pkgdir"
-# And now Agilia-related magic.
-cd $pkgdir
-rm etc/init.d/bumblebee
-mkdir etc/conf.d
-cp $filedir/bumblebee.confd etc/conf.d/bumblebee
-cp $filedir/bumblebee.initd etc/init.d/bumblebee
-chmod +x etc/init.d/bumblebee
+    go_src_dir
+    burn_patches
+    ./install --dest-dir=$pkgdir --actions=build,install --skip-stages=uninstall
+    # And now Agilia initscripts
+    install -Dm644 $filedir/bumblebee.confd $pkgdir/etc/conf.d/bumblebee
+    install -Dm755 $filedir/bumblebee.initd $pkgdir/etc/init.d/bumblebee
 }
 
 
