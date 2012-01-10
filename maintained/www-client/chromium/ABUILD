@@ -31,10 +31,10 @@ build() {
 		-Dffmpeg_branding=Chrome \
 		-Dproprietary_codecs=1 \
 		-Duse_system_libjpeg=1 \
-		-Duse_system_libxslt=0 \
-		-Duse_system_libxml=0 \
+		-Duse_system_libxslt=1 \
+		-Duse_system_libxml=1 \
 		-Duse_system_bzip2=1 \
-		-Duse_system_icu=0 \
+		-Duse_system_icu=1 \
 		-Duse_system_zlib=1 \
 		-Duse_system_libpng=1 \
 		-Duse_system_ffmpeg=0 \
@@ -45,7 +45,8 @@ build() {
 		-Dv8_use_snapshot=0 \
 		-Dlinux-use-tcmalloc=0 \
 		-Denable_webrtc=0 \
-		-Ddisable_nacl=1 \
+		-Ddisable_nacl=0 \
+		-Dremove_webcore_debug_symbols=1 \
 		$([ "${ARCH}" == "x86_64" ] && echo '-Dtarget_arch=x64' || echo '-Dtarget_arch=ia32')	
 
 	# Build this shit!
