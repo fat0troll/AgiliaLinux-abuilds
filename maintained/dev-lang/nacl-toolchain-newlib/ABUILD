@@ -81,7 +81,7 @@ build()
 
 #ran after function build() 
 #после сборки
-#after_build()
+after_build()
 {
     mkdir ${pkgdir}/opt
     mv ${srcdir}/build/ ${pkgdir}/opt/${pkgname}
