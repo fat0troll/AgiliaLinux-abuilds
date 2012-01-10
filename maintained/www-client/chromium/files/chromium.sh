@@ -2,7 +2,7 @@
 if [ "`uname -m`" = "x86_64" ] ; then 
 	export CHROME_WRAPPER=/usr/lib64/chromium/chromium
 else
-	export CHROME_WRAPPER=/usr/lib64/chromium/chromium
+	export CHROME_WRAPPER=/usr/lib/chromium/chromium
 fi
 export CHROME_DESKTOP=chromium.desktop
 if [ "`uname -m`" = "x86_64" ] ; then

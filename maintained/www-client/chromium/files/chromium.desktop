@@ -10,9 +10,11 @@ GenericName[ru]=Веб-браузер
 # Gnome and KDE 3 uses Comment.
 Comment=Web Browser
 Comment[ru]=Веб-браузер
-Exec=chromium %U
+Exec=/usr/bin/chromium %U
+TryExec=/usr/bin/chromium
 Terminal=false
 Icon=chromium
 Type=Application
 Categories=Application;Network;WebBrowser;
-MimeType=text/html;text/xml;application/xhtml_xml;
+MimeType=text/html;text/xml;application/xhtml+xml;application/mime;application/xml;application/rss+xml;application/rdf+xml;image/svg+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;
+

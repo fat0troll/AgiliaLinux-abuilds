@@ -1,17 +1,13 @@
-# ABUILD by fat0troll and aix27249
 pkgname=chromium
-pkgver=13.0.761.1
+pkgver=18.0.999.0
 pkgbuild=1
 arch=('auto')
 
 shortdesc="Chromium browser"
-longdesc=("Chromium is an open-source browser project that aims to build a safer, faster, and more stable way for all Internet users to experience the web.
 
-Chromium serves as a base for Google Chrome, which is Chromium rebranded (name and logo) with very few additions such as usage tracking and an auto-updater system.")
+source=("http://gsdview.appspot.com/chromium-browser-official/chromium-${pkgver}.tar.bz2")
 
-source=("http://build.chromium.org/buildbot/official/chromium-${pkgver}.tar.bz2")
-
-patch_opts=("chromium-system-vpx-r0.patch 0")
+patch_opts=("")
 
 tags="network www-client"
 build_deps="yasm flex"
@@ -45,9 +41,11 @@ build() {
 		-Duse_system_yasm=1 \
 		-Duse_system_libevent=1 \
 		-Duse_system_ssl=0 \
-		$([ "${ARCH}" == "i686" ] && echo '-Ddisable_sse2=1') \
+		-Ddisable_sse2=1 \
 		-Dv8_use_snapshot=0 \
 		-Dlinux-use-tcmalloc=0 \
+		-Denable_webrtc=0 \
+		-Ddisable_nacl=1 \
 		$([ "${ARCH}" == "x86_64" ] && echo '-Dtarget_arch=x64' || echo '-Dtarget_arch=ia32')	
 
 	# Build this shit!
@@ -58,6 +56,7 @@ build() {
 
 after_build() {
 	go_src_dir
+	set -e
 	install -m 0755 -D out/Release/chrome ${pkgdir}/${CHROMIUM_HOME}/chromium
 	install -m 4555 -o root -g root -D out/Release/chrome_sandbox \
 		${pkgdir}/${CHROMIUM_HOME}/chromium-sandbox
@@ -88,4 +87,5 @@ after_build() {
 	install -m 0755 -D ${filedir}/chromium.sh ${pkgdir}/usr/bin/chromium
 	mkdir -p $pkgdir/usr/share/gnome-control-center/default-apps
 	cp ${filedir}/chromium.xml ${pkgdir}/usr/share/gnome-control-center/default-apps/
+	set +e
 }
