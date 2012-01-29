@@ -2,7 +2,7 @@
 #----------------------------- General vars --------------------------------------
 #------------------------- Основные переменные -----------------------------------
 pkgname=nacl-toolchain-newlib
-pkgver=7311
+pkgver=7431
 binutilsver="2.20.1"
 newlibver="1.18.0"
 gccver="4.4.3"
@@ -63,16 +63,14 @@ custom_opts="no_strip"
 build()
 {
     set -e
-    go_src_dir
-    mkdir SRC
-    cd SRC
-    mv ${srcdir}/binutils-${binutilsver} ./binutils
-    mv ${srcdir}/newlib-${newlibver} ./newlib
-    mv ${srcdir}/gcc-${gccver} ./gcc
-    cd ..
-    patch -d ./SRC -p0 < ${srcdir}/naclbinutils-${binutilsver}-r${pkgver}.patch
-    patch -d ./SRC -p0 < ${srcdir}/naclnewlib-${newlibver}-r${pkgver}.patch
-    patch -d ./SRC -p0 < naclgcc-${gccver}-r${pkgver}.patch
+    cd ${srcdir}/
+    mkdir -p ${srcdir}/SRC
+    mv ${srcdir}/binutils-${binutilsver} ${srcdir}/SRC/binutils
+    mv ${srcdir}/newlib-${newlibver} ${srcdir}/SRC/newlib
+    mv ${srcdir}/gcc-${gccver} ${srcdir}/SRC/gcc
+    patch -d ${srcdir}/SRC -p0 < ${srcache}/naclbinutils-${binutilsver}-r${pkgver}.patch
+    patch -d ${srcdir}/SRC -p0 < ${srcache}/naclnewlib-${newlibver}-r${pkgver}.patch
+    patch -d ${srcdir}/SRC -p0 < ${srcache}/naclgcc-${gccver}-r${pkgver}.patch
     echo "Go to make sex with your Sweetie, or "Build the Eiffel Tower with chopsticks" (or self-abuse XD), or, or... {insert here "which takes a long time"}... this take a very LONG, LONG TIME"
     make PREFIX="${srcdir}"/build CANNED_REVISION="yes" build-with-newlib
     set +e

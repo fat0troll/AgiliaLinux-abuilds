@@ -10,13 +10,15 @@ source=("http://gsdview.appspot.com/chromium-browser-official/chromium-${pkgver}
 patch_opts=("")
 
 tags="network www-client"
-build_deps="yasm flex"
+build_deps="yasm flex nacl-toolchain-newlib"
 
 build() {
 	cd ${srcdir}/chromium-${pkgver}
 	burn_patches
 
 	set -e
+	# For NaCl support in Chromium
+	ln -s /opt/nacl-toolchain-newlib native_client/toolchain/linux_x86_newlib
 	# Enable proud path
 	CHROMIUM_HOME="usr/lib${LIBDIRSUFFIX}/chromium"
 	# Configure…
