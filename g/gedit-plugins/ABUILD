@@ -1,0 +1,21 @@
+pkgname=gedit-plugins
+pkgver=2.32.0
+pkgbuild=2
+arch=('auto')
+shortdesc="plugins pack for GEdit"
+source=("ftp://ftp.gnome.org/pub/gnome/sources/gedit-plugins/2.32/$pkgname-$pkgver.tar.bz2")
+tags="app-text gnome"
+adddep="gedit"
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--with-plugins=all"
+INSTALL_KEYS="DESTDIR=$pkgdir GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1"

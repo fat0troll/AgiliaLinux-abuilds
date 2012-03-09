@@ -1,0 +1,19 @@
+pkgname=libnfs
+pkgver=1.3.0
+pkgbuild=1
+arch=('auto')
+shortdesc="Client library to access NFS shares"
+source=("https://github.com/downloads/sahlberg/libnfs/libnfs-$pkgver.tar.gz")
+tags="libs net-libs"
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="./bootstrap && LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix="
+INSTALL_KEYS="DESTDIR=$pkgdir"

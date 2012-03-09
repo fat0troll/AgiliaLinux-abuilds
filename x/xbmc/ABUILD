@@ -1,0 +1,64 @@
+pkgname=xbmc
+pkgver=11.0rc2
+ver=11.0-Eden_rc2
+pkgbuild=1
+arch=('auto')
+shortdesc="Award-winning free and open source (GPL) software media player and entertainment hub for digital media."
+source=("http://mirrors.xbmc.org/releases/source/$pkgname-$ver.tar.gz")
+tags="xapps media-video"
+adddep="libmicrohttpd lsb-release"
+build_deps=$adddep
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="./bootstrap && LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--enable-debug \
+--enable-optimizations \
+--enable-gl \
+--enable-sdl \
+--enable-vaapi \
+--enable-vdpau \
+--enable-xvba \
+--enable-joystick \
+--enable-xrandr \
+--enable-rsxs \
+--enable-projectm \
+--enable-x11 \
+--disable-pulse \
+--enable-rtmp \
+--enable-samba \
+--enable-nfs \
+--enable-ffmpeg-libvorbis \
+--enable-dvdcss \
+--disable-hal \
+--enable-avahi \
+--enable-webserver \
+--enable-optical-drive \
+--enable-libbluray \
+--enable-texturepacker \
+--enable-udev \
+--enable-libusb \
+--enable-libcec \
+--enable-external-libraries \
+--disable-external-ffmpeg"
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
+after_build()
+{
+	set -e
+	go_src_dir
+	install -Dm755 tools/TexturePacker/TexturePacker \
+		${pkgdir}/usr/lib$LIBDIRSUFFIX/xbmc/
+	install -Dm644 tools/Linux/xbmc.desktop \
+		${pkgdir}/usr/share/applications/xbmc.desktop
+	install -Dm644 tools/Linux/xbmc-48x48.png \
+		${pkgdir}/usr/share/pixmaps/xbmc.png
+	set +e
+}

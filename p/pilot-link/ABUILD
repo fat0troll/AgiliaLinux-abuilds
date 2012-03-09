@@ -1,0 +1,23 @@
+pkgname=pilot-link
+pkgver=0.12.5
+pkgbuild=1
+arch=('auto')
+shortdesc="library for communicating with PalmOS devices"
+source=("http://downloads.pilot-link.org/${pkgname}-${pkgver}.tar.bz2")
+tags="libs app-pda"
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--enable-libusb \
+--enable-conduits \
+--with-libiconv \
+--with-libpng"
+INSTALL_KEYS="DESTDIR=$pkgdir"

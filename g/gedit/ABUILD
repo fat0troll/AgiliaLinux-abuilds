@@ -1,0 +1,31 @@
+pkgname=gedit
+pkgver=2.30.4
+pkgbuild=1
+arch=('auto')
+shortdesc="GNOME Editor"
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname}/2.30/${pkgname}-${pkgver}.tar.bz2")
+tags="gnome app-editors"
+numjobs=1
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--libexecdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--disable-scrollkeeper"
+INSTALL_KEYS="GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$pkgdir"
+
+after_build()
+{
+	set -e
+	install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
+	gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/${pkgname}.schemas" --domain gedit ${pkgdir}/etc/gconf/schemas/*.schemas
+	rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
+	set +e
+}

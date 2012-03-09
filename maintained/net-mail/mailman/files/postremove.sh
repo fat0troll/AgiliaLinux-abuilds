@@ -1,2 +1,0 @@
-userdel mailman
-groupdel mailman

@@ -1,0 +1,24 @@
+pkgname=brasero-gnome
+name=brasero
+pkgver=2.32.1
+pkgbuild=3
+arch=('auto')
+shortdesc="GNOME disc burning application"
+source=("http://ftp.gnome.org/pub/gnome/sources/$name/${pkgver%.*}/$name-$pkgver.tar.bz2")
+tags="app-cdr xapps"
+provides=$name
+adddep="dconf"
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix= \
+--disable-caches \
+--disable-schemas-compile"
+INSTALL_KEYS="DESTDIR=$pkgdir GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1"
