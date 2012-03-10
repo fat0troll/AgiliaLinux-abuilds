@@ -1,0 +1,32 @@
+pkgname=libbonobo
+pkgver=2.32.1
+pkgbuild=1
+arch=('auto')
+shortdesc="Bonobo CORBA interfaces library"
+source=("ftp://ftp.gnome.org/pub/gnome/sources/libbonobo/${pkgver%.*}/libbonobo-${pkgver}.tar.gz")
+tags="libs dev-libs"
+
+BUILD_SYSTEM="autotools"
+BUILD_WORD="LDFLAGS=\"$SLKLDFLAGS\" CFLAGS=\"$SLKCFLAGS\" CXXFLAGS=\"$SLKCFLAGS\" ./configure"
+BUILD_KEYS="--prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libdir=/usr/lib${LIBDIRSUFFIX} \
+--libexecdir=/usr/lib${LIBDIRSUFFIX}/bonobo \
+--disable-static \
+--mandir=/usr/man \
+--program-prefix= \
+--program-suffix="
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
+after_build()
+{
+	set -e
+	rm -f ${pkgdir}/etc/bonobo-activation/*
+	if [ "${ARCH}" = "x86_64" ] ; then
+		install -m644 "${filedir}/bonobo-activation-config64.xml" "${pkgdir}/etc/bonobo-activation/bonobo-activation-config.xml"
+	else
+		install -m644 "${filedir}/bonobo-activation-config.xml" "${pkgdir}/etc/bonobo-activation/"
+	fi
+	set +e
+}

@@ -1,0 +1,17 @@
+pkgname=libffi
+pkgver=3.0.10
+pkgbuild=2
+arch=("auto")
+shortdesc=("A Portable Foreign Function Interface Library")
+tags=("dev-libs libs")
+source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")
+
+BUILD_SYSTEM="autotools"
+BUILD_KEYS="--prefix=/usr \
+--libdir=/usr/lib$LIBDIRSUFFIX \
+--mandir=/usr/man \
+--sysconfdir=/etc \
+--disable-static \
+--enable-shared"
+INSTALL_KEYS="DESTDIR=$pkgdir"
+
