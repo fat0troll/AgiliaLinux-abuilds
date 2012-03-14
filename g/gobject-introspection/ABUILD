@@ -1,5 +1,5 @@
 pkgname=gobject-introspection
-pkgver=0.10.8
+pkgver=1.31.20
 pkgbuild=1
 arch=('auto')
 shortdesc="GObject Introspection"
