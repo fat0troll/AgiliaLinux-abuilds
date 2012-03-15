@@ -1,11 +1,12 @@
-pkgname=musescore
+pkgname=musescore-svn
+name=musescore
 pkgver=2.0
 pkgbuild=1
 arch=('auto')
 shortdesc="An open-source music score and tablature editor"
 source=("svn:https://mscore.svn.sourceforge.net/svnroot/mscore/trunk")
-patch_opts=("")
 tags="xapps media-sound"
+provides=$name
 
 build()
 {
@@ -20,11 +21,3 @@ build()
 	ln -s mscore musescore
 	set +e
 }
-
-
-#ran after function build() 
-#после сборки
-#after_build()
-#{
-
-#}
