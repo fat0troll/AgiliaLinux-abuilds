@@ -15,6 +15,7 @@ build()
 	set -e
 	[ -d build ] && make clean
 	install -d $pkgdir/usr/share/doc/$pkgname
+	make revision
 	make PREFIX=/usr release
 	make DESTDIR="$pkgdir" install
 	cd $pkgdir/usr/bin

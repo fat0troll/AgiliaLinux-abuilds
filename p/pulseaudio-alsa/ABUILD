@@ -12,7 +12,5 @@ build()
 {
 	set -e
 	install -Dm644 $filedir/asound.conf $pkgdir/etc/asound.conf
-	mkdir $pkgdir/etc/modprobe.d
-	install -Dm644 $filedir/pulseaudio-alsa.conf $pkgdir/etc/modprobe.d/
 	set +e
 }
