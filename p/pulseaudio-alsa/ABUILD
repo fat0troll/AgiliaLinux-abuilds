@@ -1,5 +1,5 @@
 pkgname=pulseaudio-alsa
-pkgver=1
+pkgver=2
 pkgbuild=1
 arch=('noarch')
 shortdesc="Configuration files for using PulseAudio with ALSA"
