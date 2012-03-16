@@ -1,6 +1,6 @@
 pkgname=pulseaudio
 pkgver=1.1
-pkgbuild=1
+pkgbuild=2
 arch=('auto')
 shortdesc="PulseAudio sound server"
 source=("http://freedesktop.org/software/$pkgname/releases/$pkgname-$pkgver.tar.gz")
@@ -9,6 +9,7 @@ pkglist="libpulse"
 config_files="etc/pulse/daemon.conf
 etc/pulse/default.pa
 etc/pulse/system.pa"
+adddep="libpulse=$pkgver"
 
 libpulse()
 {
